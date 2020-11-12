@@ -1,0 +1,978 @@
+//////////////////////////////////////////////////////// Aula 1 ///////////////////////////////////////////////////////
+
+-> Sistema operacional:
+    * Como máquina estendida: Os sistemas operacionais transformar o hardware pouco atraente em abstrações
+    mais interessantes, em um modo mais simples de ser administrado.
+    * Como gerenciador de recursos: responsabilidade pelo controle do uso dos recursos do computador, como
+    os dispositivos de entrada e saída, os acessos a memória principal e secundaria, e o tempo dos proces-
+    sos de execução. 
+    * Roda no modo kernel: Tem acesso completo a todo hardware e pode executar qualquer instrução que a má-
+    quina seja capaz.
+    OBS: Modo núcleo != Modo usuário => Modo usuário não pode executar comandos que afetam o controle da
+    máquina ou que fazer E/S.
+
+-> Middleware: É o software de computador que fornece serviços para aplicações de software além daqueles
+    disponíveis pelo SO.
+
+//////////////////////////////////////////////////////// Aula 2 ///////////////////////////////////////////////////////
+
+-> Tipos de sistemas operacionais:
+    * De tempo-real: Procuram obter resultados corretos nos tempos especificados; respondem às restrições temporais.
+    * Embarcados: Sistemas com um simples objetivo e que não possuem grandes alterações.
+
+-> Estrutura de sistemas operacionais:
+    * Monolítico: o sistema operacional inteiro é executado como um único programa em modo núcleo.
+        - Vantagem => Aumento do desempenho.
+        - Desvantagem => Excesso de liberdade torna o sistema vulnerável.
+    * Em camadas: Hierarquia de camas onde cada uma delas é construída sobre a camada imediatamente inferior.
+        - Vantagem => Se der problema em uma das camadas, basta tratá-la, não é necessário tratar o sistema
+        todo; facilita evolução e adaptação a novos ambientes.
+        - Desvantagem => Diminui o desempenho, pois um pedido de uma aplicação demora mais tempo para ter 
+        acesso a recursos.
+    * Micronúcleo: Só roda no modo núcleo o que é extremamente necessário; divide o sistema em módulos pequenos
+    onde apenas um deles (o micronúcleo) é executado no modo núcleo, o restante é executado como processo de
+    usuário.
+        - Vantagem => Caso um sub-sistema tenha problemas, o SO impedirá que a instabilidade se alastre ao
+        restante do sistema. 
+        - Desvantagem => Diminui o desempenho.
+    * Cliente-Servidor: Presença de processos clientes e processos servidores; os servidores prestam algum serviço
+    e os clientes usam esses serviços; os clientes obtém serviços enviando "mensagem" aos processos servidores.
+    * Máquina virtual: Executada diretamente sobre o hardware e implementa a multiprogramação, provendo assim não
+    uma, mas várias máquinas virtuais para a próxima camada; como cada máquina virtual é uma cópia exata do hardware,
+    cada uma delas pode executar qualquer sistema operacional.
+
+-> Conceito de processo:
+    * Um processo é um programa em execução.
+    * Contexto de processo: É tudo o que o processo precisa para sua execução, como processador, memória, posições em
+    uso e dentro de seu espaço de endereçamento, estado do processo (rodando, bloqueado e pronto), etc.  
+    * Eventos que levam à criação de processos: Ínicio do sistema, execução de chamada ao sistema (system call),
+    solicitação do usuário para criar um novo processo.
+    * Condições que levam ao término do processo: saída normal (voluntária), saída por erro (voluntária), erro fatal
+    (involuntária), cancelamento por um outro processo (involuntária).
+
+-> Multiprogramação:
+    * Cada programa recebe uma fatia de tempo do processador, somente um programa está ativa a cada momento devido ao
+    escalonamento.
+    * Se há processos prontos para serem executados, o sistema operacional decide qual será executado primeiro.
+    * A parte do sistema operacional responsável por essa decisão é chamada de escalonador.
+    * O algoritmo usado para tal é chamado de algoritmo de escalonamento.
+    * Para que um processo não execute tempo demais, praticamente todos os computadores possuem um mecanismo que
+    periodicamente causa uma interrupção.
+
+-> Tipos de processos:
+    * CPU-bound: Gasta a maior parte do seu tempo usando a CPU; longos tempos de execução e baixo volume de comunicação
+    entre processos, pouco interativo com o usuário.
+    * I/O-bound: Passa a maior parte do tempo esperando por dispositivos de E/S; passam a maior parte do tempo em estado
+    bloquado; caracterizam os sistemas interativos.
+
+//////////////////////////////////////////////////////// Aula 3 ///////////////////////////////////////////////////////
+
+-> Página:
+    * Quando o programa é maior do que o espaço de memória disponível. ele é dividido em páginas.
+    * Só as páginas sendo utilizadas naquele momento ficam na memória, o resto continua no disco.
+    * Memória virtual: Um espaço no disco rígido reservado para ajudar a armazenar os dados da memória RAM quando
+    ela está cheia. (AJUDA A ARMAZENAR PÁGINAS)
+
+-> Interrupção:
+    * É o elo entre o hardware e o software.
+    * Vetor de interrupção: Cada entrada do vetor possui o código da interrupção e o endereço do tratador de interrupções.
+    * O tratador de interrupções faz parte do sistema operacional.
+        I) Processador está executando um programa.
+       II) Checa se há interrupção.
+      III) Se houver, para o programa e executa o tratador.
+       IV) Ao terminar de tratar, volta a executar o programa.
+    IMPORTANTE => O programa interrompido e o tratador não se comunicam.
+    * Tipicamente, o hardware detecta que ocorreu uma interrupção, aguarda o final da execução da instrução corrente,
+    salva o contexto do processo interrompido e aciona o tratador.
+    * Para poder reiniciar o processo mais tarde, é necessário salvar o PC e outros registradores de status.
+    * Os registradores com dados do programa devem ser salvos pelo próprio tratador, ou seja, por software.
+    * Interrupções de hardware/Assíncronas: Geradas por um dispositivo externo a CPU; independem das instruções que
+    a CPU está executando.
+        - Interrupções de relógio => O SO atribui quotas de tempo de execução para cada um dos processos; a cada
+        clock o tratador verifica se a fatia de tempo do processo em execução já se esgotou; se for o caso, suspende-o 
+        e aciona o escalonador para que ele escolha outro processo para executar.
+    * Interrupções síncronas/traps: Ocorrem em consequência da instrução sendo executada; algumas são geradas pelo
+    hardware, para indicar situações em que o programa não teria como continuar (overflow, divisão por zero, etc);
+    também podem ser geradas explicitamente por instruções do programa, como quando é acionado ao serviço de E/S.
+
+-> Chamadas ao Sistema/System Calls:
+    * Formam a interface entre o SO e os programas dos usuários.
+    * É o mecanismo pelo qual o programa de computador solicita um serviço do núcleo do SO sobre o qual ele está
+    sendo executado.
+
+//////////////////////////////////////////////////////// Aula 4 ///////////////////////////////////////////////////////
+
+-> Threads:
+    * Uma thread é uma linha de execução de um processo.
+    * Existem duas abordagens para a solução de um problema:
+        I) Vários processos criados para solucioná-lo (concorrência de processos).
+       II) Um único processo com várias threads para solucioná-lo.
+    * Na 1ª abordagem, ocorre-se um problema em um dos processos, os outros são capazes de continuar a rodar
+    sem problemas.
+    * Já na 2ª abordagem, ocorre-se um problema em alguma parte do processo, todas as suas threads são perdidas.
+    * Cada thread possui sua própria pilha (concorrência cooperativa).
+    * As threads foram criadas pelos seguintes motivos:
+        - Existiam programas que precisavam de mais poder computacional.
+        - Não era possível implementar CPU's mais rápidas.
+        - Processos gastavam tempo demais com E/S.
+    * Problemas de concorrência de processos:
+        - Não determinstico: x = 1 || x = 2, qual o valor de x?
+        - Dependência de velocidade: f(); x = 1 || g(); x = 2, o valor final de x depende de qual das funções
+        terminar primeiro.
+        - Starvation: Um processo de baixa prioridade precisa de um recurso que nunca é fornecido a ele.
+        - Deadlock: Dois ou mais processos bloqueiam sua execução, pois um precisa de um recurso bloqueado
+        pelo outro (dependência circular).
+
+-> Threads em Modo Usuário:
+    * Vantagens: São mais escaláveis; exigem menos transições entre o modo usuário e o modo núcleo;
+    troca de contexto eficiente.
+    * Desvantagens: É necessário antever se a chamada causaria bloqueio ou todas as threads do processo podem 
+    ser bloqueadas por causa de apenas uma; exigem uma infraestrutura adicional de tempo de execução; não se
+    beneficiam de suporte de hardware para acelerar múltiplas threads.
+
+-> Threads em Modo Núcleo:
+    * Não apresentam vários dos problemas das threads em modo usuário.
+    * Porém são mais pesadas em termos de consumo de recursos.
+    * São comumente recicladas.
+
+//////////////////////////////////////////////////////// Aula 5 ///////////////////////////////////////////////////////
+
+-> Alguns conceitos:
+    * Condições de disputa: Dois ou mais processos/threads querem ter acesso simultaneamente a um recurso compartilhado.
+    * Barreiras/Sincronização: processos se aproximando de uma barreira; todos os processos, exceto um, bloqueado pela 
+    barreira, pois dependem do que ainda não foi finalizado, último processo chega, todos passam.
+    * Região crítica: É uma área do código de um algoritmo que acessa um recurso compartilhado que não pode ser acessado
+    concorrentemente por mais de uma linha de código.
+
+-> Exclusão mútua:
+    * Apenas um processo consegue acesso à região crítica, só quando ele termina que o outro processo pode acessar.
+    * Se o processo "A" está na região crítica e o processo "B" tentar acessá-la, o processo B é bloqueado.
+    * 4 condições necessárias para prover exclusão mútua:
+        I) Dois processos nunca podem estar simultaneamente em uma mesma região crítica.
+       II) Não se pode considerar velocidades ou números de CPU's.
+      III) Nenhum processo executando fora de sua região crítica pode bloquear outros processos.
+       IV) Nenhum processo deve esperar eternamente para entrar em sua região crítica.
+
+-> Técnicas não apropriadas:
+    * Desabilitação de interrupções ao acessar a região crítica: Afeta o sistema como um todo; o sistema pode ser
+    multiprocessado, e, portanto, não muito efetivo (desabilita em apenas um dos processadores).
+    * Variáveis de bloqueio (lock): Pode acabar bloqueando um programa mesmo o outro não estando mais na região crítica;
+    ou ao contrário, pode acontecer de os dois conseguirem acessar ao mesmo tempo.
+
+-> Exclusão Mútua com Espera Ocupada:
+    * Quando um processo deseja entrar na sua região crítica, ele verifica se a entrada é permitida, se não for, o 
+    processo ficará em um laço de espera, até poder entrar.
+    * Desvantagens: Desperdiça tempo de CPU, pode provocar deadlocks em sistemas com prioridades.
+
+-> Exclusão Mútua com Produtor e Consumidor:
+    * Dois processos compartilham um buffer de tamanho fixo; o processo produtor coloca dados no buffer e o processo
+    consumidor retira.
+        I) O produtor deseja colocar dados quando o buffer está cheio.
+       II) O consumidor deseja retirar dados quando o buffer está vazio.
+    * Solução: Colocar os processos para dormir até que eles possam ser executador.
+    * Desvantagem: Os dois processos podem acabar dormindo para sempre.
+
+-> Exclusão Mútua com Semáforos:
+    * Variável que tem como função controlar o acesso a recursos compartilhados; indica quantos processos (ou threads)
+    podem ter acesso a um recurso compartilhado.
+    * Semáforo = 0 => Recurso sendo utilizado.
+    * Semáfoto > 0 => Recurso livre.
+    * Inicialização: Recebe um valor inteiro indicando quantos processos podem acessar um determinado recurso.
+    * Wait/Down: Decrementa o valor do semáforo; se o semáforo está com valor 0, o processo é posto para dormir.
+    * Signal/UP: Incrementa o valor do semáforo; se o semáforo estiver com o valor 0 e existir algum processo dormindo,
+    um processo será acordado.
+    * Full: Conta o número de slots ocupados no buffer; iniciado com 0.
+    * Empty: Conta o número de slots vazios no buffer; iniciado com o número total de slots no buffer.
+    * Mutex: Garante que os processos não acessem o buffer ao mesmo tempo.
+
+-> Exclusão Mútua com Monitores:
+    * Conjunto de procedimentos, variáveis e estruturas de dados agrupados em um único módulo ou pacote
+    (Uso de wait e signal).
+    * Somente um processo pode estar ativo dentro do monitor por vez.
+    * Dependem fortemente de suporte (são construções da linguagem).
+    * Teste para detectar se um outro processo está ativo dentro do monitor.
+    * Se positivo, o processo novo ficará bloqueado até que o outro processo deixe o monitor.
+    * Caso contrário, o processo novo executa as rotinas no monitor.
+
+//////////////////////////////////////////////////////// Aula 6 ///////////////////////////////////////////////////////
+
+-> Visão Geral:
+    * Para evitar que um processo monopolize o sistema, usamos o compartilhamento de tempo, que permite sistemas
+    interativos (E/S) e requer temporizadores (timers) e interrupções.
+    * Uma troca de processos consiste em trocar o valor dos registradores de contexto da CPU.
+    * O necessário para a multiprogramação:
+        - Suporte do hardware: Timers, interrupções e proteção de memória.
+        - Suporte do SO: Escalonamento de processos, alocação de memória, gerenciamento de E/S.
+    
+-> Escalonamento de Processos:
+    * Abstração: Uma máquina para cada processo.
+    * Pseudo-paralelismo: É o que acontece de verdade; compartilhamento de tempo; aparenta que os processos estão
+    rodando ao mesmo tempo, porém, na verdade, cada um tem um pedaço de tempo do processador.
+
+-> Filas de Escalonamento:
+    * Long-term: O processo não é criado automaticamente, ele entra em uma fila.
+    * Short-term: Possui os processos prontos; é onde o escalonador escolhe qual processo será executado.
+    * E/S: Decide qual processo (com E/S pendente) deve ser tratado; cada entrada e cada saída possui uma fila.
+
+-> Características do Escalonamento:
+    * Justiça: Todos os processos têm chances iguais de usar o processador.
+    * Eficiência: Taxa de ocupação do processador ao longo do tempo.
+    * Tempo de resposta: Tempo entre a ocorrência de um evento e o término da ação correspondente (intervalo
+    entre a chegada ao sistema e início de sua execução).
+    * TurnAround/Tempo de retorno: Intervalo entre o tempo de submissão de um processo e o tempo de conclusão
+    (tempo transcorrido desde o momento em que o software entra e o instante em que termina sua execução).
+    * Tempo de espera: Soma dos períodos em que o processo estava no seu estado pronto.
+    * ThroughPut/Vazão: Número de jobs/processos executados por unidade de tempo.
+
+-> Tipos de Escalonamento:
+    * Preemptivo x Não-Preemptivo.
+    * Preemptivo: Um processo pode ser interrompido no meio da execução para que outro seja executado; é possível
+    retirar um processo da CPU antes do término de sua execução; uso de interrupções de relógio.
+    * Se um processo não consegue terminar a sua execução dentro do seu QUANTUM, outro processo é executado no seu
+    lugar e depois o processo recomeça de onde parou.
+    * Quantum/Time-Slice: Período de tempo durante o qual um processo usa o processador a cada vez.
+
+-> Problema das Trocas de Processos:
+    * Mudar de um processo para outro requer um certo tempo para a administração: salvar e carregar
+    registradores e mapas de memória, atualizar tabelas e listas do SO, etc.
+    * Isso se chama TROCA DE CONTEXTO.
+    * Um quantum pequeno: Causa muitas trocas de contexto e diminui a eficiência da CPu.
+    * Um quantum longo: Torna o tempo de resposta inaceitável para tarefas interativas curtas.
+
+-> Algoritmos de Escalonamento:
+    * Lote/Batch: Tem como objetivo maximizar o número de processos por unidade de tempo; tenta
+    manter a CPU sempre ocupada.
+    * FIFO: Não-preemptivo; uso de uma lista de processos sem prioridade, são executados na CPU seguindo a ordem
+    de requisição; ineficiente quando se tem processos que demoram.
+    * Shortest Job First - SJF: Não-preemptivo; possível prever o tempo de execução dos processos; menor processo
+    é executado primeiro; baixo aproveitamento quando se tem poucos processos prontos para serem executados.
+    * Shortest Remaining Job First - SRJF: Preemptivo; se um processo novo chega e seu tempo de execução é menor
+    do que o processo corrente na CPU, a CPU suspende o processo corrente e executa o que acabou de chegar; 
+    podendo demorar muito para alguns jobs serem finalizados, caso comecem a chegar jobs menores que eles.
+    * Interativo: Possui como objetivo reduzir o tempo de resposta, responder rapidamente as requisições,
+    satisfazer as expectativas do usuário; é preemptivo, para evitar que um processo se aposse da CPU.
+    * Tempo-real: Possui como objetivo o cumprimento de prazos; preemptivo.
+    * Híbrido: Multiple feedback queue.
+
+-> Escalonamento em Sistemas Interativos:
+    * Round-Robin: Preemptivo; escalonamento por alternância circular; fila de processos executáveis; mesmo
+    quantum para todos; o processo que não é finalizado no seu quantum, vai para o final da fila e outro
+    processo é executado.
+    * Por prioridade: As prioridades são atribuídas dinâmica ou estaticamente; executa os processos de maior
+    primeiro de forma circular; talvez processos de prioridades mais baixas não consigam executar.
+    * Multiple feedback queue: Escalonamento híbrido; novos processos entram na fila de prioridade mais alta;
+    se acabar o quantum e não finalizar, desce um nível de prioridade; se requisitar E/S, sobe um nível;
+    processos I/O-bound possuem maior prioridade; se o processo não termina dentro do quantum, o SO considera
+    que ele é CPU-bound e diminui sua prioridade; quanto maior a prioridade, menor o quantum.
+    * Fração justa/Fair share: Leva em conta a quantidade de usuários, não apenas os processos; pode garantir
+    a mesma porcentagem de uso dos recursos a cada usuário; prioridade para processos que usam menos a CPU.
+
+-> Escalonamento de Threads:
+    * Threads de usuário: Executa primeiro threads de um único processo.
+    * Threads de núcleo: Executa threads de diferentes processos intercaladas.
+
+//////////////////////////////////////////////////////// Aula 7 ///////////////////////////////////////////////////////
+
+-> Definição de Deadlock:
+    * Uma sitaução onde todos os processos de um grupo esperam por eventos que somente outro processo do mesmo grupo do
+    mesmo grupo pode fazer acontecer.
+    * Como todos estão esperando, nenhum evento esperado acontece.
+
+-> Condições necessárias:
+    I) Exclusão Mútua;              * Caso uma delas não esteja presente,
+   II) Posse e Espera;              o deadlock se torna impossível!
+  III) Não preempção;
+   IV) Espera circular.
+
+-> Detecção de Deadlocks:
+    * Procurar processos bloqueados há muito tempo.
+    * Registrar a alocação de recursos e verificar se há dependências circulares.
+    * DFS: Se ao executar esse algoritmo um ciclo for detectado, há deadlock.
+
+-> Recuperação de Deadlocks:
+    * Eliminação de processos: Cancela um dos processos para que os outros possam executar.
+    * Retrocesso/Rollback: Durante a execução dos processos são salvos "check points", que são momentos da execução
+    não apresentam problemas, caso um deadlock ocorra, retornamos para o último "check point".
+
+-> Evitando Deadlocks:
+    * Ideia básica: Alocar recursos de forma que deadlocks nunca aconteçam, supondo que temos alguma informação sobre
+    a quantidade de recursos.
+    * Algoritmo do banqueiro - Dijkstra: Consiste em dar os recursos para o processo que está mais próximo de ser
+    finalizado, para que os recursos sejam liberados mais rapidamente.
+
+-> Prevenção de Deadlocks:
+    * Atacando a condição de Exclusão Mútua: Spooling; guarda a requisição dos processos e só concede quando possível.
+    * Atacando a condição de Posse e Espera: Reserva de todos os recursos necessários antes de travar; ou o processo
+    pega todos os recursos, ou não pega nenhum.
+    * Atacando a condição de Não Preempção: Permotor que um processo "roube temporariamente" um recurso de outro.
+    * Atacando a condição da Espera Circular: Criando uma ordem de obtenção de recursos.
+
+//////////////////////////////////////////////////////// Aula 8 ///////////////////////////////////////////////////////
+
+-> Características dos Dispositivos:
+    * Síncrono: Tempo de resposta previsível (fita).
+    * Assíncrono: Tempo de resposta imprevisível (teclado).
+    * Compartilhável: Pode ser usado por vários processos ao mesmo tempo (teclado).
+    * Dedicado: Só pode ser usado em um processo por vez (impressora).
+
+-> Controladores de Dispositivos:
+    * Componentes de dispositivos de E/S: Mecânico e eletrônico.
+    * O componente eletrônico é o controlador do dispositivo e pode ser capaz de tratar múltiplos dispositivos.
+    * Tarefas do controlador: converter fluxo serial de bits em blocos de bytes; executar toda correção de erro
+    necessária; tornar o bloco disponível para ser copiado para a memória principal.
+
+-> Como a CPU acessa a informação:
+    * E/S isolada: Através de instruções especias de E/S; especifica a leitura/escrita de dados numa porta de E/S.
+    * E/S mapeada em memória: Através de instruções de leitura/escrita na memória.
+    * Híbrido - (IBM-PC): Usa os dois tipos mostrados acima.
+    * Acesso direto à memória - DMA: Um tipo de processador com funcionalidade de transferência de dados.
+
+-> Interrupções Precisas e Imprecisas:
+    * Interrupção precisa: Todas as instruções da posição apontada pelo PC foram completamente executadas; nenhuma
+    instrução depois da posição apontada pelo PC foi executada.
+    * Interrupção imprecisa: Podem estar de qualquer jeito, tanto antes tanto depois do PC (não executadas, x% 
+    executas, etc.)
+
+-> Como a CPU sabe que o dispositivo já executou o comando:
+    * E/S programada: Espera ocupada; CPU lê constantemente o status do controlador e verifica se já acabou;
+    espera até o fim da operação.
+    * E/S por interrupção: CPU interrompida por módulo de E/S e ocorre a transferência de dados; CPU continua a
+    executar outras operações.
+    * E/S por DMA: Quando necessário, o controlador de E/S solicita ao controlador DMA a transferência de dados
+    de/para a memória; nesta fase de transferência não tem envolvimento da CPU; ao fim da transferência, a CPU é
+    interrompida; a vantagem é que o processador não precisa se ocupar diretamente da operação de recepção e
+    transmissão.
+
+-> Objetivos do Software de E/S:
+    * Independência do dispositivo: Programas podem acessar qualquer dispositivo de E/S sem especificar
+    previamente qual.
+    * Nomeação uniforme: Nome de um arquivo ou dispositivo pode ser uma cadeia de caracteres ou um número
+    inteiro que é independente do dispositivo.
+    * Tratamento de erro: Tratar o mais próximo possível do hardware.
+    * Transferência síncronas x assíncronas: O SO decide quais operações serão bloqueantes; utilização de buffer
+    para armazenamento temporário.
+    * Dispositivos compartilháveis x dedicados: Discos são compartilháveis, unidades de fita não são.
+
+-> Software de Relógio:
+    * Hardware: Interrupções em instantes conhecidos.
+    * Responsabilidades de um driver de relógio:
+        I) Manutenção da hora e da data.
+       II) Evitar que processos rodem por mais tempo do que lhes é permitido.
+    * Contabiliade de uso da CPU.
+
+-> Camadas de Software de E/S:
+    * Hardware: Realiza as operações de E/S.
+    * Tratador de interrupções: Avisa quando as operações de E/S estiverem completas.
+    * Drivers: Estabelece registro de status do dispositivo.
+    * Software do SO independente do dispositivo: Nomeação, proteção, buffer, etc.
+    * Software de E/S nível usuário: Chama a E/S.
+
+//////////////////////////////////////////////// Gerenciamento de Memória //////////////////////////////////////////////
+
+-> Introdução
+    * Necessidade de memória grande, rápida e não-volátil (dependendo da aplicação).
+    * Hierarquia de memórias:
+        - Uma pequena quantidade de memória rápida, porém de alto custo => Cache.
+        - Uma quantidade considerável de memória principal (Memória RAM) de velocidade média e custo médio.
+        - Uma grande quantidade de armazenamento em disco de velocidade e custo baixos.
+    * O gerenciamento de memória visa fazer uso eficiente da hierarquia de memórias para ajudar na execução de
+    aplicações.
+
+-> Relocação e Proteção:
+    * Não se sabe com certeza onde o programa será carregado na memória.
+    * Uma solução para isso é o uso de valores base e limite que marcam o espaço de endereçamento de um processo;
+    esses valores são guardados em registradores especiais.
+    * Esses registradores são usados para dar a cada processo um espaço de endereçamento separado e, consequentemente, 
+    protegido.
+    * Base: Início da partição.  =>  Limite: Tamanho da partição.
+    * Multiprogramação com partições fixas: O espaço de endereçamento é dividido em partições fixas e existem duas
+    abordagens para o gerenciamento:
+        1. Cada partição possui sua fila de entrada.
+        2. Existe uma fila única de entrada e a medida que alguma partição esvazia, essa fila manda o processo para
+        ocupá-la.
+
+-> Swapping:
+    * Alterações na alocação de memória à medida que processos entram e saem da memória.
+    * Colocar processo no disco, tirar do disco, colocar na memória principal, etc.
+    * Válido lembrar que enquanto o processo está no disco ele não usa o processador.
+    OBS => Swapping não é memória virtual, porém memória virtual usa a técnica de swapping.
+
+-> Gerenciamento de Memória Livre:
+    * Mapa de bits: Cada elemento da matriz representa um espaço de endereçamento; 1 para espaço ocupado e 0 para livre.
+    * Lista encadeada: Os nós guardam qual o processo, qual a base e qual o limite; cada nó representa um espaço de 
+    endereçamento.
+
+-> Memória Virtual:
+    * Quando o programa é maior do que o espaço de memória disponível, precisamos de outro processo, a paginação.
+    * Paginação: Dividimos o processo em pedaços chamados "páginas" e carregamos na memória virtual apenas as páginas
+    sendo utilizadas no momento.
+    * O processador não acessa o disco para executar páginas de lá, acessa apenas para guardar e tirar.
+    * Molduras: Pedaços de espaço de endereçamento em que ficam as páginas.
+    * Tabelas de páginas: Indica quais páginas estão carregadas na memória e quais ainda estão no disco.
+    * O processo:
+        - Tem um espaço de endereçamento virtual que corresponde as posições de memória que ele pode ocupar.
+        - Necessita que os endereços virtuais sejam traduzidos para endereços físicos (operação realizada pela MMU - 
+        Memory Management Unit).
+
+-> Acelerando a Paginação:
+    * O mapeamento de endereço virtual para endereço físico deve ser rápido.
+    * Se os espaço de endereçamento virtual for muito grande, a tabela de páginas será grande e isso causa buscas
+    mais lentas.
+    * Memória associativa/Translation LookAside Buffer (TLB): Tabela das traduções de endereços mais recentes; é uma
+    cache para tabelas de páginas mais rápida.
+    * Tabelas de páginas multi-níveis: Minimizam o problema de armazenar tabelas de páginas muito grandes na memória,
+    pois só coloca na memória as partes da tabela que estão sendo usadas.
+
+//////////////////////////////////////////////// Substituição de Páginas //////////////////////////////////////////////
+
+-> Introdução:
+    * Page-fault: O processo tenta acessar uma página que não está na memória; esse processo ficará bloqueado até que a
+    página seja carregada do disco para a memória.
+    * Caso a memória esteja cheia, é necessário remover uma página da memória que afete o mínimo possível o sistema.
+    * Se desejar remover uma página que foi modificada, ela deve primeiro ser salva no disco; se não tiver sido
+    modificada, é apenas sobreposta.
+    * Melhor não escolher uma página que está sendo muito usada; possivelmente precisará ser trazida de volta logo.
+
+-> Algoritmo para Substituição de Páginas:
+    * Não usada recentemente (NUR/NRU): Dois sinais extras são adicionados à tabela de páginas => referenciada/R (limpo 
+    periodicamente) e modificada/M; NUR remove página aleatoriamente da classe de ordem mais baixa que não esteja vazia.
+        - Classe 0 => Não referenciada e não modificada.
+        - Classe 1 => Não referenciada e modificada.
+        - Classe 2 => Referenciada e não modificada.
+        - Classe 3 => Referenciada e modificada.
+    * First-in, first-out (FIFO): Mantém uma lista encadeada de todas as páginas na memória; páginas mais antiga na 
+    cabeça da lista; página que chegou por último na memória no final da lista; na ocorrência de falta de página, a
+    página na cabeça da lista é removida e a nova página é adicionada no final da lista.
+        - Desvantagem => Mesmo uma página sendo antiga, ela pode ser usada com muita frequência, não sendo bom removê-la.
+    * Segunda chance (SC): A lista de páginas em ordem FIFO; analisa o bit R da página na cabeça da lista; caso seja 1, 
+    modifica ele para 0 e coloca a página no final da fila; caso seja 0, remove para adicionar uma nova página no final
+    da lista.
+    * Relógio (Clock): Otimização simples do algoritmo SC; as páginas são organizadas de forma circular; quando ocorre
+    uma falta de página, a página apontada é examinada; caso o bit R seja 0, a página é removida; caso contrário, mudamos
+    o bit R para 0 e avançamos o ponteiro para avaliar a próxima página.
+    * Menos recentemente usada/Least recently used (LRU): Considera que páginas usadas recentemente logo serão usadas
+    novamente; retira da memória a página que há mais tempo não é usada; usa hardware especial, um contador incrementado
+    a cada instrução usado em referências à memória; esse contador é incrementado quando a página é usada; nunca esquece 
+    nada, logo, com o tempo, uma página pode ter sido muito referenciada inicialmente, porém não ser mais usada na 
+    execução e continuar na memória.
+    * Envelhecimento/Aging: Algoritmo mais próximo ao ótimo; cada página mantém um contador que é decrementado caso a 
+    página não esteja sendo utilizada; a cada interrupção de relógio, desloca o valor do contador para direita e coloca 
+    o bit mais significativo o valor de R; dessa forma, o contador será incrementado ou decrementado de acordo com o uso
+    ou não da página.
+    * Conjunto de trabalho/Working set (WS): Adiciona na tabela de páginas um tempo que indica a última vez que a página 
+    foi utilizada (idade); se R == 1, o tempo da página é atualizada para o tempo atual e R é salvo como 0; se R == 0 e a
+    idade for avançada, a página deve ser removida; caso R == 0 e a idade for próxima de uma constante, essa página deverá
+    ser lembrada, pois caso não ache uma página com tempo avançado, ela será a que deverá ser removida; tem como 
+    desvantagem o fato de que percorre a tabela de páginas inteira mesmo quando já encontrou uma página para remover.
+    * WSClock: Acessa a tabela de páginas de forma circular e já remove a primeira página que satisfaz a condiçãp de 
+    remoção; se não houver nenhuma página ideal, pega a página que foi acessada a mais tempo;
+    * Ótimo: Impraticável; escolhe exatamente a melhor página a ser removida, sempre seleciona a página que não será usada
+    por mais tempo.
+
+-> Anomalia de Belady:
+    * Esperado: Quanto mais molduras de página a memória possuir, menos faltas de páginas o programa terá.
+    * Anomalia: Em alguns casos, o algoritmo de substituição FIFO tem mais faltas de páginas para uma quantidade maior de
+    molduras.
+
+//////////////////////////////////////////////// Paginação e Segmentação //////////////////////////////////////////////
+
+-> Introdução:
+    * Mesmo com um bom projeto, o sistema ainda pode sofrer paginação excessiva (trashing).
+    * Isso deixa o computador mais lento, pois faz necessário mais acessos ao disco.
+    * Problema: Quando alguns processos precisam de mais memória, mas nenhum processo pode seder espaço.
+    * Solução: Reduzir o número de processos que competem pela memória; levar alguns deles por completo para o disco 
+    (swap) e liberar a memória a ele alocada, isto é, repensar o grau de multiprogramação.
+
+-> Tamanho da página:
+    * Para um tamanho de página pequeno:
+        - Vantagens => Menos fragmentação interna; menos partes não usadas de programas na memória.
+        - Desvantagens => Programas precisam de mais páginas, logo o tamanho da tabela de páginas é maior, ocupando 
+        mais espaço.
+    * Quando um mesmo processo está sendo executado mais de uma vez: Existe um espaço de endereçamento para instruções
+    (que é compartilhado pelas múltiplas execuções desse processo) e um espaço de endereçamento de dados (individual 
+    por execução).
+    * Quando dois ou mais processos compartilham as mesmas instruções, compartilham a mesma tabela de páginas das 
+    instruções.
+    * Essa estratégia faz com que sobre mais espaço de endereçamento para os dados de um processo.
+
+-> Envolvimento do SO com Paginação:
+    1. Criação do Processo: Determina o tamanho do processo; cria a tabela de páginas; cria área de troca/swap area 
+    (local do disco onde ficam as outras páginas que não estão sendo utilizadas).
+    2. Execução do Processo: Inicia MMU (Unidade de Gerenciamento de Memória) para novos processos.
+    3. Ocorrência de falta de página: Determina endereço virtual que causou a falta; escolhe e descarta, se necessário,
+    uma página antiga; carrega página requisitada para a memória (swap); depois retorna para o processo como se 
+    nenhuma falta tivesse ocorrido.
+    4. Terminação de Processo: Libera tabela de páginas, páginas e espaço em disco que as páginas ocupam.
+
+-> Fixação de Páginas na Memória:
+    * Memória Virtual e E/S interagem ocasionalmente.
+    * Processo 1 emite chamada ao sistema para ler do disco para o buffer (ex: comunicação via DMA).
+    * Enquanto espera pela E/S, outro processo (2) inicia; ocorre uma falta de página para o processo 2; buffer do 
+    processo 1 pode ser escolhido para ser levado para disco; isso causa um problema.
+    * Solução POSSÍVEL => Fixação de páginas envolvidas com E/S na memória.
+
+-> Memória Secundária:
+    * Podemos manter na área de troca todos os espaços de endereçamento das páginas do processo, inclusive as que 
+    estão na memória principal (Memória RAM).
+        - Vantagem => Mapeamento mais simples.
+        - Desvantagem => Ocupa mais espaço no disco.
+    * Podemos manter na área de troca apenas os espaços de endereçamento das páginas do processo que não estão na 
+    memória principal.
+        - Vantagem => Menos espaço ocupado em disco.
+        - Desvantagem => Mapeamento mais complexo, pois além da tabela de páginas é necessário um mapa de disco.
+    * Qual é a melhor estratégia depende do que é mais crítico no momento.
+
+-> Segmentação:
+    * Compartilhamento de espaço de endereçamento.
+    * Cada processo possui o seu espaço de endereçamento, porém possui um segmento compartilhado.
+    * Um segmento é um espaço da memória que mais de um processo pode ter acesso.
+    * Não é muito utilizada, pois tem um complicador => Esse gerenciamento deve ser feito pelo programador, não 
+    pelo SO, aumentando a complexidade.
+    * GDT - Global Descriptor Table: Única para todo o sistema; tabela do SO onde cada entrada informa os dados 
+    de um segmento, informações sobre todos os segmentos que o SO pode ter.
+    * LDT - Local Descriptor Table: Uma para cada processo; informa quantos segmentos um processo pode ter acesso.
+
+
+//////////////////////////////////////////////// sistemas de arquivos //////////////////////////////////////////////
+
+-> armazenamento da informação a longo prazo (requisitos):
+    * deve ser possível armazenar uma quantidade muito grande de informação
+    * a informação deve sobreviver ao término do processo que a usa - persistência
+    * múltiplos processos devem ser capazes de acessar a informação concorrentemente - compartilhamento
+
+-> estrutura de arquivos:
+    * sequência de bytes
+    * sequência de registros 
+    * árvore
+
+-> tipos de arquivos:
+    * arquivo executável:
+        - cabeçalho: número mágico, tamanho do código, dos dados, dos segmentos de pilha e da tabela de símbolos, ponto de entrada.
+        - flags, código, dados, bits de relocação, tabela de símbolos
+    * repositório (archive): (biblioteca de funções para serem usadas por programas.
+        - cabeçalho: nome do módulo, data, proprietário, proteção, tamanho.
+        - módulo-objeto
+
+-> atributos (flags) de arquivos:
+    * exemplo: arquivo somente de leitura, momento de criação, tamanho atual, ascii ou binário etc
+
+-> acesso aos arquivos:
+    * acesso sequencial: conveniente quando o meio era a fita magnética
+    * acesso aleatório: essencial para sistemas de base de dados
+
+-> operações com arquivos:
+    * create, delete, open, close, read, write, append, seek, get attributes, set attributes, rename
+
+-> sistemas de diretórios hierárquicos:
+    * diretórios: servem para fazer a organização de arquivos e de outros diretórios, é uma entidade lógica que aponta
+    pra outros diretórios ou arquivos.
+    * usualmente diretórios são implementados como arquivos especiais e seguem uma política de árvore.
+
+-> nomes de caminhos (pathnames):
+    * servem para acessar diretamente um diretório ou arquivo.
+
+-> operações com diretórios:
+    * create, delete, opendir, closedir, readdir, rename, link, unlink
+
+-> implementação do sistema de arquivos
+    * possível layout:
+        - Master Boot Record (MBR)
+        - tabela de partição: divide o disco em partições lógicas
+        - bloco de boot: segunda parte do bootloader
+        - superbloco: principais parâmetros do sistema de arquivo. ex: tipo do sistema, número de blocos
+        - gerenciamento de espaço livre
+        - i-nodes: estrutura de dados com informações sobre um arquivo
+        - diretório-raiz: diretório inicial 
+        - arquivos e diretórios
+
+-> implementação de arquivos (1):
+    * alocação contígua: cada arquivo pra ser armazenado precisa ficar em blocos adjacentes e pra manipular o arquivo
+    só precisa saber onde começa o primeiro bloco,
+        - vantagem: simples e rápida
+        - desvantagem: quando há remoção você precisa juntar os blocos livres, ou vai "perder" aquele espaço vazio entre blocos.
+    
+-> implementação de arquivos (2):    
+    * armazenamento de um arquivo como uma lista encadeada: cada bloco do arquivo além de conter os dados, ele contém o
+    endereço do próximo bloco
+        - em disco: custo de ficar usando a unidade de armazenamento, porque precisa passar por cada bloco anterior e
+        requer acesso ao disco, que é uma operação caracteres
+        - com tabela de alocação: a tabela vai ficar na memória principal, base dos arquivo fat, muito mais eficiente
+    
+-> implementação de arquivos (3):    
+    * i-node: uma estrutura por aquivo, que contém os atributos e os endereços dos blocos do disco que o arquivo está adotando.
+    o arquivo só precisa carregar essa estrutura. tem uma quantidade de entrada fixas, mas as últimas posições apontam para
+    blocos de disco com endereços adicionais.
+        - vantagem em relação as tabelas de alocação: se há um problema em uma uma estrutura, só esse arquivo será afetado.
+        diferentemente do que se houvesse um problema na tabela.
+        - sistemas operacionais baseados em unix
+
+-> i-nodes em hierarquia:
+    * cada endereço adicional aponta pra outro bloco que (tem dados do arquivo e) apontam pra outros blocos.
+
+-> implementação de diretórios:
+    * diretórios são como uma tabela e cada entrada da tabela aponta para um arquivo ou outro diretório.
+    * diretório simples:
+        - entradas de tamanho fixo
+        - endereços de disco e atributos na entrada de diretório
+    * diretório no qual cada entrada se refere a um i-nodes
+
+-> busca por um diretório no unix: exemplo no slide.
+
+-> informações sobre um arquivo no msdos:
+    * nome do arquivo, extensão, atributos, reservado, tempo, data, número do primeiro bloco, tamanho
+
+-> arquivos compartilhados (1):
+    * criação de atalhos: dois diretórios podem apontar pro mesmo arquivo sem ter uma cópia.
+        - atalho simbolico: tem o caminho do arquivo que está apontando. se tirar o original, o atalho fica inválido.
+        - hard link: aponta direto pro i-node. se o arquivo original for removido, vai apontar pra um i-node invalido,
+        se esse i-node for reutilizado pode acabar apontando pro arquivo errado.
+
+-> arquivos compartilhados (2):
+    * o i-node tem um contador que contém a quantidade de diretórios que estão apontando para o arquivo.
+    enquanto o contador for >= 1 o arquivo não será realmente removido. 
+        - problema: o arquivo original vai ter espaço ocupado por um arquivo que ele não está mais usando.
+
+-> journaling:
+    * lidar com falhas durante as operações em disco.
+    * faz log das operações. se o sistema quebrar, na recuperação checa por operações inacabadas e conclui a operação.
+    * as operações logadas precisam ser idempotentes. ou seja, sua repetição não vai causar nenhum prejuízo
+    ao sistema de arquivos. ex: atualizar o mapa de bits para marcar bloco n como livre.
+
+-> sistemas de arquivos virtuais:
+    * integração de vários sistemas de arquivos em uma única estrutura. os processos não sabem da existência das
+    distintas.
+
+-> gerenciamento do espaço em disco:
+    * considerações relevantes:
+        - tamanho do bloco: eficiência.
+        - monitoramento de blocos livres (ex: mapas de bits)
+
+-> tamanho de arquivos
+-> tamanhos de blocos e partições
+-> gerenciamento de blocos livres:
+    * em lista encadeada
+    * em um mapa de bits
+
+//////////////////////////////////////////////// sistemas de tempo real //////////////////////////////////////////////
+
+-> sistema de tempo real:
+    * um sistema computacional que, alé de demandar resultados corretos, estes resultados precisam estar disponíveis
+    nos tempos previamente especificados.
+    * sem violação de prazos (deadline)
+    * necessidade de infraestrutura de software especializada (ex: sistemas operacionais de tempo real - RTOS)
+
+-> características:
+    * responder a estímulos externos nos tempos especificados.
+        - diferente de computação rápida
+    * previsibiliade
+        - diferentes excuções do mesmo sistema precisam ser similares
+    * dependabilidade
+        - confiança em um sistema computacional, de tal forma que pode ser assegurada justificadamente a continuidade
+        do serviço que ele disponibiliza.
+        - uso de métricas como confiabilidade e disponibilidade
+    * concorrência
+    * precisão
+        - resultados precisos
+        - pode ocorrer balanceamento entre imprecisão e precisão caso as restrições temporais não possam ser atendidas
+
+-> sistemas de tempo real:
+    * sistemas embarcados
+    * redes de computadores
+    * sistemas distribuídos
+    * sistemas de banco de dados
+    * etc
+    * classificação
+        - sistemas de tempo real não críticos: violação de prazo = perdas toleráveis
+        - sistemas de tempo real críticos: violação de prazo = perdas do equipamento ou vidas humanas
+
+-> sistemas de tempo real
+    * envolve várias áreas. ex: estatística e probabilidade, métodos formais.
+    * escalonamento:
+        - área de grande pesquisa
+        - preocupações: utilização de recursos, atendimento às restrições temporais, consumo de energia, tratamento de falhas
+        - sistemas não críticos: técnicas probabilísticas
+        - sistemas críticos técnicas determinísticas
+
+-> escalonamento
+    * abstração computacional via o uso de tarefas
+        - unidade concorrente
+        - conceito similar a threads
+    * previsibilidade: 
+        - as restrições das tarefas precisam ser conhecidas em tempo de projeto
+    * tipos comumente adotados:
+        - tarefas periódicas: ativação ocorre em intervalos regulares de tempo
+        - tarefas esporádicas: ativação devido à ocorrência, de eventos internos/externos
+
+-> restrições temporais
+    * tarefa periódica: tp = (r,c,d,p)
+        - r = tempo de liberação (release): tempo mais cedo que a tarefa estará pronta pra executar no período 
+        - c = tempo de computação no pior caso (worst-case computation time - WCET)
+        - d = tempo de término (deadline): intervalo de tempo entre o início do período e o tempo máximo que a tarefa precisará
+        concluir sua execução
+        - p = período: intervalo de tempo para criação de uma nova instância da tarefa
+    * tarefa esporádica: ts = (c,d,min)
+        - min = tempo mínimo entre duas requisições consecutivas 
+
+-> relações entre tarefas:
+    * exclusão mútua: somente uma tarefa pode utilizar o recuso compartilhado
+    * precedência: tarefa j somente poderá executar após a conclusão de uma tarefa implementação
+
+-> técnicas de escalonamento:
+    * dinâmica:
+        - durante a execução
+        - adoção de uma política de escalonamento (usualmente baseada em prioridades)
+        - antes da execução é realizado um teste sobre a possibilidade de escalonamento
+    * estática:
+        - antes da execução
+        - representada por um algoritmo de busca
+        - resultado: uma tabela indicando a ordem de execução de cada instância de tarefa
+    * considerando relações entre tarefas, o problema é NP-completo
+
+-> abordagens dinâmicas
+    * taxa monotônica (rate monotonic)
+        - prioridade estática 
+        - menor período, menor prioridade
+        - tarefas independentes
+        - deadline = período
+    * earliest deadline first
+        - prioridade dinâmica
+        - maior prioridade, prazo de conclusão mais próximo
+        - tarefas independentes
+        - deadline = período
+    * protocolo de prioridade teto 
+        - priority ceiling protocolo
+        - mesmas suposições de rate monotonic
+        - permite exclusão mutua
+        - utilização de semáforos
+
+-> taxa monotônica (RM): exemplo no slide.
+-> earliest deadline first (EDF): exemplo no slide.
+
+-> abordagens estáticas:
+    * construção de uma escala antes da execução (offline, pre-runtime)
+    * uma busca por solução (ex: busca em largura, profundidade,...)
+        - utilização de heurísticas
+        - complexidade em encontrar solução ótima
+        - uma escala viável é satisfátória
+    * considera um período de escalonamento igual ao MMC entre os períodos das tarefas
+        - várias instâncias de uma tarefa podem ocorrer no MMC
+        - release da i-ésima instância: rp1 = rp + prdp * (i-1)
+        - deadline da i-ésima instância: dp1 = dp + prdp * (i-1)
+    * exemplo no slide/aula
+
+-> abordagens estáticas vs dinâmicas
+    * estáticas:
+        - menos overhead em tempo de execução
+        - se uma escala existe, então o algoritmo de busca pode encontrá-la
+        - menos flexíveis
+        - comportamento determinístico
+        - grande capacidade em lidar com relações entre tarefas complexas
+    * dinâmicas:
+        - teste de escalonamento usualmente simples
+        - capacidade de adaptação (flexibilidade)
+        - suposições que podem não ser a realidade de alguns sistemas (ex: tarefas independentes)
+        - podem não conseguir gerar uma escala viável em situaçãoes que abordagens estáticas conseguem
+        - overhead maior que as abordagens estáticas
+    * SOLUÇÃO: abordagem híbrida
+    * exemplo no slide/aula
+
+-> estimativa do WCET: métodos para estimar o tempo de computação no pior caso
+    * métodos estáticos:
+        - analisa os possíveis fluxos de execuções de um código
+        - adota um modelo abstrato de hardware
+        - faz estimativas de limites superiores
+    * métodos baseados em medição
+        - usualmente executa a tarefa ou partes da tarefa em um hardware real
+        - considera um conjunto de dados de entrada que geram o pior caso na execução da tarefa
+        - faz estimativas baseado no comportamento observado
+
+-> métodos estáticos: exemplo slide/aula
+-> métodos baseados em medição: exemplo no slide/aula
+
+-> métodos estáticos x médição: ambos métodos são complementares
+    * métodos estáticos:
+        - fazem uma estimativa do pior caso elevada
+        - dificuldades em criar um modelo abstrado do hardware
+        - alguns desafios na validação
+    * métodos baseados em medição
+        - subestimam o pior caso (ex: técnicas para melhorar execução de instruções - pipeline, cache,
+        execução de instruções fora de ordem)
+        - ajudam a refinar o WCET e validader os métodos estáticos
+
+-> RTOS: real time operating systems
+    * serviçõs não definidos não somente em termos funcionas, mas também em termos temporarais
+    * características:
+        - suporte a temporizadores (timers)
+        - previsibiliade na execução de tarefas (tasks)
+        - escalonamento considerando restrições temporais
+        - mecanismos  pra comunicação de tarefas de tempo-real
+        - rápida preempção
+        - tratamento de interrupções previsíveis
+        - comunicação assíncrona de E/S (sem bloqueio)
+
+-> exemplos
+    * RTAI: real time application interface for linux: extensão do kernel do linux considerando serviçõs de tempo real
+    * RT_TASK: tarefas de tempo real (modo kernel ou usuário)
+    * LXRT: framework de tempo real em modo usuário
+
+//////////////////////////////////////////////// sistemas distribuidos //////////////////////////////////////////////
+
+-> necessidade de poder computacional
+    * no passado o foco era no aumento da velocidade de CPUs
+    * necessidade de dispositivos menores
+    * problema: dissipação de calor com dispositivos menores
+    * solução: paralelismo
+        - multiprocessador (compartilham memoria)
+        - multicomputador (uma interface de rede e varios computadores com sua propria memoria)
+        - sistema distribuido (computadores completos + internet)
+
+-> multiprocessadores
+    * sistema computacional composto por 2 ou mais processadores que compartilham uma memória em comumente
+    * compartilhamento de memória usado como mecanismo de comunicação
+    * um programa executando em qualquer CPU tem seu próprio espaço de endereçamento
+    * condição de corrida entre os diferentes CPU usando a memória
+    * S.O. precisa fazer o gerencimento da arquitetura
+
+-> acesso uniforme à memória
+    * a memória eh compartilhada e o tempo de acesso à cpu eh igual pra qualquer processador
+    * abordagem baseada em barramento (barramento funciona como um gargalo)
+    * abordagem baseada em barramentos cruzados
+
+-> acesso não uniforme à memória
+    * cada processador tem uma memória próxima???
+
+-> sistema operacional
+    * cada processador tem sua própria cópia do seu sistema operacional e a memória é dividida pra
+    cada um dos processadores
+        - problemas: balanceamento de carga
+        - solução:
+            - CPU Mestre: sistema operacional (mas tbm pode funcionar como um gargalo)
+            - outras cpus: rodam processos de usuário
+        * SMP - multiprocessadores simétricos
+            - uma única instância do sistema operacional compartilhada pelas CPUs
+    
+-> multicomputadores
+    * também conhecida como cluster computers
+    * Componente básico: um PC simplificado com interface de rede de alta performance
+    * CPUs fortemente acopladas, cada uma tem sua própria memória e geralmente no mesmo espaço físico
+    * comunicação via passagem de mensagens. usualmente, transmissão é realizada através de pacotes
+    * mesmo S.O., sistemas de arquivos e uma única administração
+
+-> compartilhamento de memória distribuído
+    * o software pode criar uma interface entre os computadores para compartilhar dados como se fosse uma memória
+
+-> sistemas distribuidos
+    * coleção de computadores independentes que aparenta ao usuário com um único sistema correspondente
+    * computadores fracamente acoplados e geograficamente distribuídos
+    * comunicação via passagem de mensagens
+    * papel importante da internet
+
+-> objetivos:
+    * compartilhamento de recursos
+    * transparência na distruibuição
+    * openness - capacidade do sistema ser estendido e reimplementado de diversas formas
+    * segurança
+    * escabilidade
+    * dependabilidade
+    * concorrência
+    * qualidade de serviço
+
+-> redes de computadores
+    * sistemas distruibidos são construídos em cima de redes de computadores
+        - LAN - Local Ara Network
+        - WAN - Wide
+    * serviços
+        - orientado a conexão: para existir comunicação é necessária uma conexão (envia info com a conexão)
+        - não orientado a conexão: não precisa existir a conexão para se comunicar (envia a info antes da conexão)
+
+-> protocolo de redes
+    * conjunto de regras que determinam como computadores devem se comunicar
+    * adotam uma pilha de protocolos
+        - application layer (HTTP, FTP, POP) 
+        - transport layer (TCP, UDP)
+        - internet protocol layer (IP)
+        - network access layer (ethernet & net card)
+    * protocolos representativos da internet:
+        - IP: protocolo de datagramas
+        - TCP (transmission control protocol): usualmente funciona por cima do protocolo IP. comunicação
+        orientada à conexão.
+
+-> computação móvel e ubíqua
+    * computadores móveis, computadores espalhados em todos os locais
+
+-> cloud computing
+    * provimento de serviços sem que o cliente precise ter aquilo instalado
+
+//////////////////////////////////////////////// sistemas distribuidos 2 //////////////////////////////////////////////
+
+-> arquitetura
+    * arquitetura de um sistema é a sua estrutura em termos dos componentes e seus relacionamentos
+    * objetivo: garantir que a estrutura satisfará as demandas presentes e futuras
+    * elementos:
+        - entidades comunicantes (ex processos)
+        - paradigma de comunicação (ex invocação remota)
+        - funções e responsabilidades (cliente-servidor)
+        - mapeamento (ex mapeamento de serviços e multiplos servidores)
+
+-> cliente-servidor
+    * duas arquiteturas representativas: cliente-servidor e peer-to-peer.
+    * cliente-servidor:
+        - uma das mais importantes e adotas.
+        - servidor: um processo implementado e disponibilizando um serviço específico
+        - cliente: um processo que requisita um serviço de um servidor através do envio de uma requisição e a espera de
+        uma resposta.
+        - potencialmente, clientes e servidores ficam em máquinas separadas
+        - servidores podem se tornar clientes de outros servidores
+        - abordagem centralizada
+    * peer-to-peer:
+        - todos os processos (peers) possuem funções similares
+        - não existe uma distinção entre cliente e servidor
+        - oferecem a mesma interface para os outros projetos
+        - abordagem descentralizada
+        - maior escabilidade para comaprtilhamento de recursos
+        - volatilidade nos nós
+        - complexidade maior que a abordagem cliente-servidor
+
+-> middleware
+    * um dos principais objetivos de SD é transformar um conjunto de nós fracamente acoplados e heterogêneos em um sistema
+    coerente.
+    * uma camada de software em cima do sistema operacional
+    * provê estruturas de dados e operações que permitem processos/usuários operarem em conjunto de forma consistente
+    * é o S.O. dos sistemas distribuídos, mas não é necessariamente um S.O.
+
+-> remote procedure call (RPC)
+    * chamada de procedimentos localizados em outras máquinas
+    * chamada remota assemelha-se a uma chamada local de procedimento
+    * alguns middleware são baseados nesta técnica
+    * cliente:
+        - adota uma bibilioteca de procedimento - cliente stub, server stub
+        - client stub: representa o procedimento do servidor no espaço de endereçamento
+        - server stub: transformar requisições remotas oriundas da rede em chamadas locais
+        - marshaling: empacotamento dos parâmetros em uma mensagem
+        - unmarshaling: desempacotamento dos parâmetros (servidor)
+        - usualmente adota-se uma linguagem de definição de interface para geração do stubs
+
+-> object-based middleware
+    * baseado no paradigma orientado a objeto. exemplo: CORBA ( common object request broker architecture).
+    * abordagem baseada em cliente-servidor:
+        - processos nas máquinas, clientes podem requisitar operações em objetos localizados em márquinas servidoras
+    * object request broker (ORB): intermédio na comunicação cliente-servidor
+        - abstrai todos os detalhes de baixo nível da comunicação (ex: localização do servidor)
+        - comunicação entre ORBs: internet interORB protocol
+    * adoção de uma interface definition language (IDL): especificação das interfaces dos objetos (ex: métodos e parâmetros) 
+
+-> publish/subscribe
+    * cada processo pode ser produtor ou consumidor de informação (ou ambos)
+    * produtor faz o broadcast quando uma nova informação estiver disponível (publishing)
+    * processos interessados em certas informações fazem o subscribe para os assuntos de interessantes
+    * inscrição é feita através da comunicação com um processo daemon, o qual está localizado na mesma márquina que monitora as mensagens
+    * roteadores de informação (information routers): ajudam na distribuição de mensagens em WANs e Internet.
+
+-> web services:
+    * um serviço disponibilizado via internet
+    * adoção de um conjunto de padrões
+    * simple object access protocol (SOAP): troca de mensagens via uso de XML (tipicamente usando HTTP)
+    * directory service: guarda descrições de serviço utilizando o padrão UDDI (universal, description, discovery and integration)
+    * serviços descritos através de web services definition language (WSDL)
+
+FIMMMMMMMMMMMMMMMMMMMMMMM!!!!!
