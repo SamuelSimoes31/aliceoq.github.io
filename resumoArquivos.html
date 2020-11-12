@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Sistemas de arquivos</title>
+    </head>
+    <body style="margin-left:100px">
+        <a href="index.html">⬅ voltar resumão</a>
+        <h1>🤓 RESUMO: Sistemas de arquivos 💻</h1>
+        <p>Implementação (FAT, i-node)</p>
+        <hr align="left" width="650px">
+        
+        <h2>Armazenamento da informação a longo prazo</h2>
+        <ul>
+            <li>Deve ser possível armazenar uma quantidade muito grande de informação.</li>
+            <li>A informação deve sobreviver ao término do processo que a usa – persistência.</li>
+            <li>Múltiplos processos devem ser capazes de acessar a informação concorrentemente – compartilhamento.</li>
+        </ul>
+
+        <h2>Estrutura de arquivos</h2>
+        <img src="images/estruturaArquivo.png" alt="estruturaArquivo">
+        <ul>
+            <li>sequência de bytes;</li>
+            <li>sequência de registros;</li>
+            <li>árvore.</li>
+        </ul>
+
+        <h2>Tipos de arquivos</h2>
+        <ul>
+            <li>Arquivo executável: cabeçalho: número mágico, tamanho do código, dos dados,
+                dos segmentos de pilha e da tabela de símbolos, ponto de entrada. flags, código,
+                dados, bits de relocação, tabela de símbolos</li>
+            <li>repositório (archive/biblioteca de funções para serem usadas por programas):
+                cabeçalho: nome do módulo, data, proprietário, proteção, tamanho. módulo-objeto.</li>
+        </ul>
+
+        <h2>Atributos (flags) de arquivos</h2>
+        <p>Ex: arquivo somente de leitura, momento de criação, tamanho atual, ascii ou binário etc.</p>
+        
+        <h2>Acesso aos arquivos</h2>
+        <ul>
+            <li>Acesso sequencial: conveniente quando o meio era a fita magnética.</li>
+            <li>Acesso aleatório: essencial para sistemas de base de dados.</li>
+        </ul>
+        
+        <h2>Operações com arquivos</h2>
+        <p>Create, delete, opendir, closedir, readdir, rename, link, unlink.</p>
+        
+        <h2>Sistemas de diretórios hierárquicos</h2>
+        <img src="images/diretorios.png" alt="diretorios">
+        <p>Diretórios: servem para fazer a organização de arquivos e de outros diretórios, é uma entidade
+            lógica que aponta pra outros diretórios ou arquivos.</p>
+        <p>Usualmente diretórios são implementados como arquivos especiais e seguem uma política de árvore.</p>
+        
+        <h2>Nomes de caminhos (pathnames)</h2>
+        <p>Servem para acessar diretamente um diretório ou arquivo.</p>
+        
+        <h2>Operações com diretórios</h2>
+        <p>Create, delete, opendir, closedir, readdir, rename, link, unlink.</p>
+
+        <h2>Implementação do sistema de arquivos</h2>
+        <img src="images/implementacao1.png" alt="possivel layout de implementacao">
+        <ul>
+            <li>Master Boot Record (MBR);</li>
+            <li>tabela de partição: divide o disco em partições lógicas;</li>
+            <li>bloco de boot: segunda parte do bootloader;</li>
+            <li>superbloco: principais parâmetros do sistema de arquivo. ex: tipo do sistema, número de blocos;</li>
+            <li>gerenciamento de espaço livre;</li>
+            <li>i-nodes: estrutura de dados com informações sobre um arquivo;</li>
+            <li>diretório-raiz: diretório inicial;</li>
+            <li>arquivos e diretórios.</li>
+        </ul>
+        
+        <h2>Implementação de arquivos (1)</h2>
+        <img src="images/implementacao2.png" alt="implementacao2">
+        <p>Alocação contígua: cada arquivo pra ser armazenado precisa ficar em blocos adjacentes
+            e pra manipular o arquivo só precisa saber onde começa o primeiro bloco.</p>
+        <ul>
+            <li>Vantagem: simples e rápida.</li>
+            <li>Desvantagem: quando há remoção você precisa juntar os blocos livres, ou vai "perder"
+                aquele espaço vazio entre blocos.</li>
+        </ul>
+
+        <h2>Implementação de arquivos (2)</h2>
+        <img src="images/implementacao3.png" alt="implementacao3">
+        <p>Armazenamento de um arquivo como uma lista encadeada: cada bloco do arquivo além de conter
+            os dados, ele contém o endereço do próximo bloco</p>
+        <ul>
+            <li>Em disco: custo de ficar usando a unidade de armazenamento, porque precisa passar 
+                por cada bloco anterior e requer acesso ao disco, que é uma operação caracteres.</li>
+            <li>Com tabela de alocação: a tabela vai ficar na memória principal, base dos arquivo fat, muito mais eficiente</li>
+        </ul>
+        
+        <h2>Implementação de arquivos (3)</h2>
+        <img src="images/i-node.png" alt="i-nodes">
+        <p>i-node: uma estrutura por aquivo, que contém os atributos e os endereços dos blocos do disco que o arquivo está adotando.
+            O arquivo só precisa carregar essa estrutura. Tem uma quantidade de entrada fixas, mas as últimas posições apontam para
+            blocos de disco com endereços adicionais.</p>
+        <ul>
+            <li>Vantagem em relação as tabelas de alocação: se há um problema em uma uma estrutura, só esse arquivo será afetado,
+                diferentemente do que se houvesse um problema na tabela.</li>
+            <li>Usado em sistemas operacionais baseados em unix.</li>
+        </ul>
+        <p>i-node em hierarquia: cada endereço adicional aponta pra outro bloco que (tem dados do arquivo e) apontam pra outros blocos.</p>
+        
+        <h2>Implementação de diretórios</h2>
+        <img src="images/diretorios2.png" alt="diretorios2">
+        <p>Diretórios são como uma tabela e cada entrada da tabela aponta para um arquivo ou outro diretório.</p>
+        <ol type="a">
+            <li>Um diretório simples: entradas de tamanho fixo, endereços de disco e atributos na entrada do diretório.</li>
+            <li>Diretório no qual cada entrada se refere apenas a um i-node.</li>
+        </ol>
+
+        <h2>Busca de um diretório no UNIX</h2>
+        <img src="images/buscadiretorio.png" alt="buscadiretorio">
+
+        <h2>Informações sobre um arquivo no MS-DOS</h2>
+        <p>nome do arquivo, extensão, atributos, reservado, tempo, data, número do primeiro bloco, tamanho.</p>
+
+        <h2>Arquivos compartilhados (1)</h2>
+        <img src="images/arqCompartilhado1.png" alt="arqCompartilhado1">
+        <p>Criação de atalhos: dois diretórios podem apontar pro mesmo arquivo sem ter uma cópia.</p>
+        <ul> 
+            <li>Atalho simbolico: tem o caminho do arquivo que está apontando. se tirar o original, o atalho fica inválido.</li>
+            <li>Hard link: aponta direto pro i-node. se o arquivo original for removido, vai apontar pra um i-node invalido,
+                se esse i-node for reutilizado pode acabar apontando pro arquivo errado.</li>
+        </ul>
+
+        <h2>Arquivos compartilhados (2)</h2>
+        <img src="images/arqCompartilhado2.png" alt="arqCompartilhado2">
+        <p>O i-node tem um contador que contém a quantidade de diretórios que estão apontando para o arquivo.
+            enquanto o contador for >= 1 o arquivo não será realmente removido.</p>
+        <p>Problema: o arquivo original vai ter espaço ocupado por um arquivo que ele não está mais usando.</p>
+
+        <h2>Journaling</h2>
+        <ul>
+            <li>Lidar com falhas durante as operações em disco.</li>
+            <li>Faz log antes das operações. Se o sistema quebrar, na recuperação
+                (ex: no boot), checa por operações inacabadas e conclui a operação</li>
+            <li>As operações logadas precisam ser idempotentes. Ou seja, sua repetição não vai causar nenhum prejuízo
+                ao sistema de arquivos. ex: atualizar o mapa de bits para marcar bloco n como livre.</li>
+        </ul>
+
+        <h2>Sistemas de arquivos virtuais</h2>
+        <p>Integração de vários sistemas de arquivos em uma única estrutura.
+            Os processos não sabem da existência das distintas implementações.</p>
+
+        <h2>Gerenciamento do espaço em disco</h2>
+        <p>Considerações relevantes:</p>
+        <ul>
+            <li>Tamanho do bloco: eficiência.</li>
+            <li>Monitoramento de blocos livres (ex: mapas de bits).</li>
+        </ul>
+
+        <h2>Tamanhos de arquivos</h2>
+        <h2>Tamanhos de blocos e partições</h2>
+        <h2>Gerenciamento de blocos livres</h2>
+        <img src="images/gerBlocosLivres.png" alt="gerBlocosLivres">
+    </body>
+</html>
