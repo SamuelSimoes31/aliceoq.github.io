@@ -1,88 +1,96 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">   
+        <link rel="stylesheet" href="styleResumo2.html">
         <meta charset="UTF-8">
         <title>Gerenciamento de memória</title>
     </head>
-    <body style="margin-left:100px">
-        <a href="index.html">⬅ voltar resumão</a>
-        <h1>🤓 RESUMO: Gerenciamento de memória 💻</h1>
-        <p>proteção e relocação, paginação</p>
-        <hr align="left" width="650px">
-        <p>Idealmente, todo programador deseja dispor de memória: grande, rápida e não-volátil neste caso, depende da aplicação).</p>
-        <p>Hierarquia de memórias</p>
-        <ul>
-            <li>pequena quantidade de memória rápida, de alto custo - cache</li>
-            <li>quantidade considerável de memória principal de velocidade média, custo médio</li>
-            <li>gigabytes de armazenamento em disco de velocidade e custo baixos</li>
-        </ul>
-        <p>O gerenciamento de memória visa fazer uso eficiente da Hierarquia
-            de memórias, para ajudar na execução da aplicações.</p>
-        <h2>Como rodar um programa?</h2>
-        <img src="images/rodarPrograma.png" alt="rodarPrograma">
-        <ol>
-            <li>Dado o comando para executar um programa, é realizada uma seqüência de instruções para
-                copiar código e dados doprograma objeto do disco para a memória principal.</li>
-            <li>PC aponta para o endereço de memória onde o programa foi escrito.</li>
-            <li>Processador executa instruções do programa trazidas da memória.</li>
-        </ol>
-        <h2>Relocação e proteção</h2>
-        <p>Não se sabe com certeza onde o programa será carregado na memória.
-            Localizações de endereços de variáveis e de código de rotinas não podem ser absolutos.</p>
-        <p>Uma solução para relocação e proteção: uso de valores base e limite. Registradores especiais.</p>
-        <h2>Registradores base e limite</h2>
-        <ul>
-            <li>Usados para dar a cada processo um espaço de endereçamento separado (protegido) – partição.</li>
-            <li>Base = início da partição</li>
-            <li>Limite = tamanho da partição</li>
-        </ul>
-        <h2>Multiprogramação com partições fixas.</h2>
-        <p>Partições fixas de memória:</p>
-        <ul>
-            <li>filas de entrada separada para cada partição</li>
-            <li>fila única de entrada</li>
-        </ul>
-        <h2>Swapping: Troca de Processos (1)</h2>
-        <img src="images/swapping1.png" alt="swapping">
-        <ul>
-            <li>Alterações na alocação de memória à medida que processos entram e saem da memória.</li>
-            <li>Regiões sombreadas correspondem a regiões de memória não utilizadas naquele instante.</li>
-        </ul>
-        <h2>Swapping: Troca de Processos (2)</h2>
-        <img src="images/trocaProc.png" alt="trocaProc 2">
-        <ol type="a">
-            <li>Alocação de espaço para uma área de dados em expansão.</li>
-            <li>Alocação de espaço para uma pilha e uma área de dados, ambos em expansão.</li>
-        </ol>
-        <h2>Gerenciamento de memória livre</h2>
-        <img src="iamges/gerFreeMem.png" alt="gerenciamento de memoria livre">
-        <ol type="a">
-            <li>Parte da memória com 5 segmentos de processos (P) e 3 segmentos de memória livre (Hole – H).</li>
-            <li>Mapa de bits correspondente (Cada elemento da matriz representa um espaço de endereçamento; 1 para espaço ocupado e 0 para livre).</li>
-            <li>Mesmas informações em uma lista encadeada (Os nós guardam qual o processo, qual a base e qual o limite; cada nó representa um espaço de 
-                endereçamento).</li>
-        </ol>
-        <h2>Memória virtual: Paginação</h2>
-        <img src="images/paginacao.png" alt="paginacao">
-        <p>Existe um conjunto de endereços que os programas podem gerar, esses endereços são chamados de endereços virtuais e formam o espaço de endereçamento virtual.</p>
-        <p>Nos computadores sem memória virtual, os endeços são colocados diretamente no barramento de memória. Já com a memória virtual,
-            os endereços vão para uma MMU (Memory Management Unit), que faz o mapeamento dos endereços virtuais em endereços físicos de memória.</p>
-        <p>Quando um programa é maior do que o espaço de memória disponível, o espaço de endereçamento será dividido em páginas. Na memória física
-            teremos as molduras de página, que tem o mesmo tamanho da página.</p>
-        <img src="images/tabelaPagina.png" alt="tabelaPagina">
-        <p>Para armazenar o mapeamento entre o endereço virtual e físico (ou mapeamento de páginas virtuais em molduras) são usadas as tabelas de páginas.</p>
-        <h2>Acelerando a paginação</h2>
-        <p>O mapeamento de endereço virtual para endereço físico deve ser rápido.</p>
-        <p>Se o espaço de endereçamento virtual for grande, a tabela de páginas será grande = buscas mais lentas.</p>
-        <h3>Memória Associativa ou TLB (Translation Lookaside Buffers)</h3>
-        <ul>
-            <li>Tabela das traduções de endereços mais recentes;</li>
-            <li>Uma cache para tabelas de página, memória associativa rápida.</li>
-        </ul>
-        <h3>Tabelas de Páginas Multi-Níveis</h3>
-        <ul>
-            <li>Minimizam o problema de armazenar tabelas de páginas muito grandes na memória;</li>
-            <li>Desempenho vs. Espaço ocupado.</li>
-        </ul>
+    <body>
+        <div id="contentBox">
+            <div id="titleBox">
+                <a href="index.html">⬅ voltar resumão</a>
+                <h1>🤓 RESUMO: Gerenciamento de memória 💻</h1>
+                <p class="subtitle">proteção e relocação, paginação</p>
+            </div>
+
+            <p>Idealmente, todo programador deseja dispor de memória: grande, rápida e não-volátil neste caso, depende da aplicação).</p>
+            <p>Hierarquia de memórias</p>
+            <ul>
+                <li>pequena quantidade de memória rápida, de alto custo - cache</li>
+                <li>quantidade considerável de memória principal de velocidade média, custo médio</li>
+                <li>gigabytes de armazenamento em disco de velocidade e custo baixos</li>
+            </ul>
+            <p>O gerenciamento de memória visa fazer uso eficiente da Hierarquia
+                de memórias, para ajudar na execução da aplicações.</p>
+            <h2>Como rodar um programa?</h2>
+            <img src="images/rodarPrograma.png" alt="rodarPrograma">
+            <ol>
+                <li>Dado o comando para executar um programa, é realizada uma seqüência de instruções para
+                    copiar código e dados doprograma objeto do disco para a memória principal.</li>
+                <li>PC aponta para o endereço de memória onde o programa foi escrito.</li>
+                <li>Processador executa instruções do programa trazidas da memória.</li>
+            </ol>
+            <h2>Relocação e proteção</h2>
+            <p>Não se sabe com certeza onde o programa será carregado na memória.
+                Localizações de endereços de variáveis e de código de rotinas não podem ser absolutos.</p>
+            <p>Uma solução para relocação e proteção: uso de valores base e limite. Registradores especiais.</p>
+            <h2>Registradores base e limite</h2>
+            <ul>
+                <li>Usados para dar a cada processo um espaço de endereçamento separado (protegido) – partição.</li>
+                <li>Base = início da partição</li>
+                <li>Limite = tamanho da partição</li>
+            </ul>
+            <h2>Multiprogramação com partições fixas.</h2>
+            <p>Partições fixas de memória:</p>
+            <ul>
+                <li>filas de entrada separada para cada partição</li>
+                <li>fila única de entrada</li>
+            </ul>
+            <h2>Swapping: Troca de Processos (1)</h2>
+            <img src="images/swapping1.png" alt="swapping">
+            <ul>
+                <li>Alterações na alocação de memória à medida que processos entram e saem da memória.</li>
+                <li>Regiões sombreadas correspondem a regiões de memória não utilizadas naquele instante.</li>
+            </ul>
+            <h2>Swapping: Troca de Processos (2)</h2>
+            <img src="images/trocaProc.png" alt="trocaProc 2">
+            <ol type="a">
+                <li>Alocação de espaço para uma área de dados em expansão.</li>
+                <li>Alocação de espaço para uma pilha e uma área de dados, ambos em expansão.</li>
+            </ol>
+            <h2>Gerenciamento de memória livre</h2>
+            <img src="iamges/gerFreeMem.png" alt="gerenciamento de memoria livre">
+            <ol type="a">
+                <li>Parte da memória com 5 segmentos de processos (P) e 3 segmentos de memória livre (Hole – H).</li>
+                <li>Mapa de bits correspondente (Cada elemento da matriz representa um espaço de endereçamento; 1 para espaço ocupado e 0 para livre).</li>
+                <li>Mesmas informações em uma lista encadeada (Os nós guardam qual o processo, qual a base e qual o limite; cada nó representa um espaço de 
+                    endereçamento).</li>
+            </ol>
+            <h2>Memória virtual: Paginação</h2>
+            <img src="images/paginacao.png" alt="paginacao">
+            <p>Existe um conjunto de endereços que os programas podem gerar, esses endereços são chamados de endereços virtuais e formam o espaço de endereçamento virtual.</p>
+            <p>Nos computadores sem memória virtual, os endeços são colocados diretamente no barramento de memória. Já com a memória virtual,
+                os endereços vão para uma MMU (Memory Management Unit), que faz o mapeamento dos endereços virtuais em endereços físicos de memória.</p>
+            <p>Quando um programa é maior do que o espaço de memória disponível, o espaço de endereçamento será dividido em páginas. Na memória física
+                teremos as molduras de página, que tem o mesmo tamanho da página.</p>
+            <img src="images/tabelaPagina.png" alt="tabelaPagina">
+            <p>Para armazenar o mapeamento entre o endereço virtual e físico (ou mapeamento de páginas virtuais em molduras) são usadas as tabelas de páginas.</p>
+            <h2>Acelerando a paginação</h2>
+            <p>O mapeamento de endereço virtual para endereço físico deve ser rápido.</p>
+            <p>Se o espaço de endereçamento virtual for grande, a tabela de páginas será grande = buscas mais lentas.</p>
+            <h3>Memória Associativa ou TLB (Translation Lookaside Buffers)</h3>
+            <ul>
+                <li>Tabela das traduções de endereços mais recentes;</li>
+                <li>Uma cache para tabelas de página, memória associativa rápida.</li>
+            </ul>
+            <h3>Tabelas de Páginas Multi-Níveis</h3>
+            <ul>
+                <li>Minimizam o problema de armazenar tabelas de páginas muito grandes na memória;</li>
+                <li>Desempenho vs. Espaço ocupado.</li>
+            </ul>
+        </div>
     </body>
 </html>

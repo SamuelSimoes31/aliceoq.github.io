@@ -1,80 +1,99 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">  
+        <link rel="stylesheet" href="styleResumo2.html">
         <meta charset="UTF-8">
         <title>Concorrência</title>
     </head>
-    <body style="margin-left:100px">
-        <a href="index.html">⬅ voltar resumão</a>
-        <h1>🤓 RESUMO: Concorrência 💻</h1>
-        <p>Condição de disputa (corrida), região crítica, exclusão mútua</p>
-        <hr align="left" width="650px">
-        <h2>Condições de Disputa/Corrida (Race Condition)</h2>
-        <p>Dois processos querem ter acesso simultaneamente a um recurso compartilhado</p>
-        <h2>Região crítica</h2>
-        <p>Parte do programa onde a memória compartilhada é acessada.</p>
-        <h2>Condições necessárias para prover exclusão mútua:</h2>
-        <ul>
-            <li>Dois processos nunca podem estar simultaneamente em uma mesma região crítica.</li>
-            <li>Não se pode considerar velocidades ou número de CPUs.</li>
-            <li>Nenhum processo executando fora de sua região crítica pode bloquear outros processos.</li>
-            <li>Nenhum processo deve esperar eternamente para entrar em sua região crítica.</li>
-        </ul>
-        <h2>Técnicas não apropriadas para exclusão mútua</h2>
-        <ul>
-            <li>Desabilitação de Interrupções ao acessar região crítica, afeta o sistema pode ser multiprocessado, 
-                e, portanto, não muito efetivo.</li>
-            <li>Variáveis de bloqueio (lock): mesmo problema do diretório de spool</li>
-        </ul>
-        <h2>Espera ocupada com variáveis de bloqueio</h2>
-        <img src="images/esperaOcupada.png" alt="esperaOcupada">
-        <h2>Espera ocupada com alternância estrita</h2>
-        <img src="images/alternanciaEstrita.png" alt="alternanciaEstrita">
-        <h2>Solução de G.L. Peterson para exclusão mútua</h2>
-        <img src="images/peterson.png" alt="">
-        <h2>Problema da espera ocupada</h2>
-        <p>Desperdiça tempo de CPU, pode provocar deadlocks.</p>
-        <h2>Problema do produtor consumidor</h2>
-        <ul>
-            <li>Não é apenas uma questão de exclusão mútua!</li>
-            <li>se consumo > produção, buffer esvazia -> consumidor não tem o que consumir.</li>
-            <li>se consumo < produção, buffer enche -> produtor não consegue produzir mais.</li>
-        </ul>
-        <img src="images/prodCons.png" alt="prodCons">
-        <h2>Semáforo</h2>
-        <img src="images/semaforo.png" alt="semaforo">
-        <ul>
-            <li>Variável que tem como função o controle de acesso a recursos compartilhados.</li>
-            <li>Indica quantos processos (ou threads) podem ter acesso a um recurso compartilhado.<br>
-                Para se ter exclusão mútua, só um processo executa por vez, para isso utiliza-se um 
-                semáforo binário. Esse semáforo atua como um mutex.</li>
-        </ul>
-        <p>Principais operações sobre semáforos:</p>
-        <ul>
-            <li>Inicialização: recebe um valor inteiro indicando quantos processos podem acessar um
-                determinado recurso.</li>
-            <li>wait ou down ou P: decrementa o valor do semáforo. Se o semáforo está com valor 0,
-                o processo é posto para dormir.</li>
-            <li>signal ou up ou V: se o semáforo estiver com o valor 0 e existir algum processo
-                adormecido, um processo será acordado.</li>
-        </ul>
-        <p>As operações de incrementar e decrementar devem ser operações atômicas ou indivisíveis.
-            Apenas um processo por vez executando essas operações.</p>
-        <h2>Monitores</h2>
-        <img src="images/monitores.png" alt="monitores">
-        <ul>
-            <li>Coleção de rotinas, variáveis e estruturas de dados.</li>
-            <li>Só um processo ativo no monitorem qualquer momento.</li>
-            <li>Dependem de suporte linguístico (são construções da linguagem).</li>
-            <li>Usam mutexes e semáforos internamente.</li>
-        </ul>
-        <h2>Troca de mensagens</h2>
-        <h2>Barreiras: Sincronização</h2>
-        <img src="images/barreira.png" alt="barreira">
-        <ul>
-            <li>processos se aproximando de uma barreira</li>
-            <li>todos os processos, exceto um, bloqueados pela barreira</li>
-            <li>último processo chega, todos passam</li>
-        </ul>
+    <body>
+        <div id="contentBox">
+            <div id="titleBox">
+                <a href="index.html">⬅ voltar resumão</a>
+                <h1>🤓 RESUMO: Concorrência 💻</h1>
+                <p class="subtitle">Condição de disputa (corrida), região crítica, exclusão mútua</p>
+            </div>
+
+            <h2>Condições de Disputa/Corrida (Race Condition)</h2>
+            <p>Dois processos querem ter acesso simultaneamente a um recurso compartilhado</p>
+            <h2>Região crítica</h2>
+            <p>Parte do programa onde a memória compartilhada é acessada.</p>
+
+            <h2>Condições necessárias para prover exclusão mútua:</h2>
+            <ul>
+                <li>Dois processos nunca podem estar simultaneamente em uma mesma região crítica.</li>
+                <li>Não se pode considerar velocidades ou número de CPUs.</li>
+                <li>Nenhum processo executando fora de sua região crítica pode bloquear outros processos.</li>
+                <li>Nenhum processo deve esperar eternamente para entrar em sua região crítica.</li>
+            </ul>
+            
+            <h2>Técnicas não apropriadas para exclusão mútua</h2>
+            <ul>
+                <li>Desabilitação de Interrupções ao acessar região crítica, afeta o sistema pode ser multiprocessado, 
+                    e, portanto, não muito efetivo.</li>
+                <li>Variáveis de bloqueio (lock): mesmo problema do diretório de spool</li>
+            </ul>
+            
+            <h2>Espera ocupada com variáveis de bloqueio</h2>
+            <img src="images/esperaOcupada.png" alt="esperaOcupada">
+            
+            <h2>Espera ocupada com alternância estrita</h2>
+            <img src="images/alternanciaEstrita.png" alt="alternanciaEstrita">
+            
+            <h2>Solução de G.L. Peterson para exclusão mútua</h2>
+            <img src="images/peterson.png" alt="">
+            
+            <h2>Problema da espera ocupada</h2>
+            <p>Desperdiça tempo de CPU, pode provocar deadlocks.</p>
+            
+            <h2>Problema do produtor consumidor</h2>
+            <ul>
+                <li>Não é apenas uma questão de exclusão mútua!</li>
+                <li>se consumo > produção, buffer esvazia -> consumidor não tem o que consumir.</li>
+                <li>se consumo < produção, buffer enche -> produtor não consegue produzir mais.</li>
+            </ul>
+            <img src="images/prodCons.png" alt="prodCons">
+            
+            <h2>Semáforo</h2>
+            <img src="images/semaforo.png" alt="semaforo">
+            <ul>
+                <li>Variável que tem como função o controle de acesso a recursos compartilhados.</li>
+                <li>Indica quantos processos (ou threads) podem ter acesso a um recurso compartilhado.<br>
+                    Para se ter exclusão mútua, só um processo executa por vez, para isso utiliza-se um 
+                    semáforo binário. Esse semáforo atua como um mutex.</li>
+            </ul>
+            <p>Principais operações sobre semáforos:</p>
+            <ul>
+                <li>Inicialização: recebe um valor inteiro indicando quantos processos podem acessar um
+                    determinado recurso.</li>
+                <li>wait ou down ou P: decrementa o valor do semáforo. Se o semáforo está com valor 0,
+                    o processo é posto para dormir.</li>
+                <li>signal ou up ou V: se o semáforo estiver com o valor 0 e existir algum processo
+                    adormecido, um processo será acordado.</li>
+            </ul>
+            <p>As operações de incrementar e decrementar devem ser operações atômicas ou indivisíveis.
+                Apenas um processo por vez executando essas operações.</p>
+            
+            <h2>Monitores</h2>
+            <img src="images/monitores.png" alt="monitores">
+            <ul>
+                <li>Coleção de rotinas, variáveis e estruturas de dados.</li>
+                <li>Só um processo ativo no monitorem qualquer momento.</li>
+                <li>Dependem de suporte linguístico (são construções da linguagem).</li>
+                <li>Usam mutexes e semáforos internamente.</li>
+            </ul>
+            
+            <h2>Troca de mensagens</h2>
+            
+            <h2>Barreiras: Sincronização</h2>
+            <img src="images/barreira.png" alt="barreira">
+            <ul>
+                <li>processos se aproximando de uma barreira</li>
+                <li>todos os processos, exceto um, bloqueados pela barreira</li>
+                <li>último processo chega, todos passam</li>
+            </ul>
+        </div>
     </body>
 </html>

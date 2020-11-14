@@ -1,131 +1,139 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">   
+        <link rel="stylesheet" href="styleResumo2.html">
         <meta charset="UTF-8">
         <title>Processos e threads</title>
     </head>
-    <body style="margin-left:100px">
-        <a href="index.html">⬅ voltar resumão</a>
-        <h1>🤓 RESUMO: Processos e threads 💻</h1>
-        <p>Conceito, contexto, espaço de endereçamento</p>
-        <hr align="left" width="650px">
-        <h2>Definição de processo</h2>
-        <p>Processo é um programa em execução. Acompanhado dos valores atuais do PC,
-            registradores e variáveis.</p>
-        <h2>Contexto de processo</h2>
-        <p>É tudo que o processo precisa para sua execução, como processadores, memória, posição
-            em uso e seu espaço de endereçamento, estados de processor, etc.</p>
-        <h2>Criação de processos</h2>
-        <p>Principais eventos que levam à criação de processos:</p>
-        <ul>
-            <li>Início do sistema</li>
-            <li>Execução de chamada ao sistema de criação de processos</li>
-            <li>Solicitação do usuário para criar um novo processo</li>
-            <li>Início de um job em lote</li>
-        </ul>
-        <h2>Término de Processos</h2>
-        <p>Condições que levam ao término de processos:</p>
-        <ul>
-            <li>Saída normal (voluntária)</li>
-            <li>Saída por erro (voluntária)</li>
-            <li>Erro fatal (involuntário)</li>
-            <li>Cancelamento por um outro processo (involuntário)</li>
-        </ul>
-        <h2>Estados de processos</h2>
-        <p>Possíveis estados de processos:</p>
-        <ul>
-            <li>Em execução</li>
-            <li>Bloqueado</li>
-            <li>Pronto</li>
-        </ul>
-        <img src="images/estadoProcesso.png" alt="Imagem slide pag 4">
-        <ol>
-            <li>O processo bloqueia aguardando entrada</li>
-            <li>O escalonador seleciona outro processo</li>
-            <li>O escalonador seleciona esse processo</li>
-            <li>A entrada torna-se disponível</li>
-        </ol>
-        <h2>Camadas de processos</h2>
-        <img src="images/camadaProcessos.png" alt="Imagem slide pag 5">
-        <ul>
-            <li>Camada mais inferior de um SO estruturado por processos
-                (trata interrupções, escalonamento, espaço de endereçamento)</li>
-            <li>Acima daquela camada estão os processos sequenciais</li>
-        </ul>
-        <h2>Escalonamento de processos</h2>
-        <ul>
-            <li>A parte do sistema operacional responsável por essa decisão é chamada escalonador.
-                O algoritmo usado para tal é chamado de algoritmo de escalonamento.</li>
-            <li>Para que um processo não execute tempo demais, são usadas interrupções de relógio</li>
-        </ul>
-        <h2>Implementação de processos</h2>
-        <p>Processo = estrutura de dados</p>
-        <h2>Múltiplos processos</h2>
-        <img src="images/multiplosProcessos.png" alt="">
-        <p>PCB = Process Control Block, mantém info de gerenciamento do processo</p>
-        <h2>Threads</h2>
-        <p>Uma thread é uma linha de execução de código
-            que executa em paralelo com outras linhas do
-            mesmo processo, compartilhando seu espaço de
-            memória.</p>
-        <h2>Diferenças entre threads e processos</h2>
-        <p>Vantagens das threads:</p>
-        <ul>
-            <li>Mais rápidas de criar</li>
-            <li>Como compartilham o mesmo espaço de endereçamento
-                a comunicação entre elas é mais rápida.</li>
-        </ul>
-        <p>Desvantagens:</p>
-        <ul>
-            <li>Tornam o código mais complexo.</li>
-        </ul>
-        <h2>Motivação para threads: Concorrência</h2>
-        <p>Problemas:</p>
-        <ul>
-            <li>Programas que precisam de mais poder computacional</li>
-            <li>Dificuldade de implementação de CPUs mais rápidas</li>
-            <li>Processos gastam tempo demais com entrada e saída</li>
-        </ul>
-        <p>Solução:</p>
-        <ul>
-            <li>Construção de computadores capazes de executar várias tarefas simultaneamente</li>
-        </ul>
-        <h2>Problemas com concorrência</h2>
-        <ul>
-            <li>Não determinismo</li>
-            <li>Dependência de velocidade (depende de qual função terminar primeiro)</li>
-            <li>Starvation: processo de baixa prioridade precisa de um recurso que nunca é fornecido a ele.</li>
-            <li>Deadlock: dois ou mais processos bloqueiam sua execuçãopois um precisa de um recurso bloqueado pelo outro</li>
-        </ul>
-        <h2>Modelo de thread</h2>
-        <p>Itens por thread: contador de programa, registradores
-            pilha e estado. </p>
-        <h2>Implementação de threads de usuário</h2>
-        <img src="images/threadUsuario.png" alt="">
-        <p>Vantagens das threads em modo usuário:</p>
-        <ul>
-            <li>Mais escaláveis (sem espaço de tabela ou pilha no núcleo)</li>
-            <li>Permitem personalização do escalonamento</li>
-            <li>Exigem menos transições entre modo usuário e modo núcleo.
-                Troca de contexto eficiente entre threads.</li>
-        </ul>
-        <p>Desvantagens das threads em modo usuário:</p>
-        <ul>
-            <li>É difícil implementar chamadas de sistema com bloqueio.</li>
-            <li>Page faults bloqueiam todas as threads de um processo</li>
-            <li>Exigem uma infraestrutura adicional de tempo de execução</li>
-            <li>Não se beneficiam de suporte de hardware para acelerar múltiplas threads</li>
-        </ul>
-        <h2>Implementação de threads de núcleo</h2>
-        <img src="images/threadNucleo.png" alt="">
-        <ul>
-            <li>Não apresentam vários dos problemas das threads em modo usuário</li>
-            <li>Mais pesadas em termos de consumo de recursos, overhead na criação</li>
-            <li>Pouca flexibilidade para gerenciar o escalonamento</li>
-            <li>Comumente recicladas</li>
-        </ul>
-        <h2>Implementações híbridas</h2>
-        <p>Multiplexação de threads de usuário sobre threads de núcleo</p>
-        <img src="images/threadHibrida.png" alt="">
+    <body>
+        <div id="contentBox">
+            <div id="titleBox">
+                <a href="index.html">⬅ voltar resumão</a>
+                <h1>🤓 RESUMO: Processos e threads 💻</h1>
+                <p class="subtitle">Conceito, contexto, espaço de endereçamento</p>
+            </div>
+
+            <h2>Definição de processo</h2>
+            <p>Processo é um programa em execução. Acompanhado dos valores atuais do PC,
+                registradores e variáveis.</p>
+            <h2>Contexto de processo</h2>
+            <p>É tudo que o processo precisa para sua execução, como processadores, memória, posição
+                em uso e seu espaço de endereçamento, estados de processor, etc.</p>
+            <h2>Criação de processos</h2>
+            <p>Principais eventos que levam à criação de processos:</p>
+            <ul>
+                <li>Início do sistema</li>
+                <li>Execução de chamada ao sistema de criação de processos</li>
+                <li>Solicitação do usuário para criar um novo processo</li>
+                <li>Início de um job em lote</li>
+            </ul>
+            <h2>Término de Processos</h2>
+            <p>Condições que levam ao término de processos:</p>
+            <ul>
+                <li>Saída normal (voluntária)</li>
+                <li>Saída por erro (voluntária)</li>
+                <li>Erro fatal (involuntário)</li>
+                <li>Cancelamento por um outro processo (involuntário)</li>
+            </ul>
+            <h2>Estados de processos</h2>
+            <p>Possíveis estados de processos:</p>
+            <ul>
+                <li>Em execução</li>
+                <li>Bloqueado</li>
+                <li>Pronto</li>
+            </ul>
+            <img src="images/estadoProcesso.png" alt="Imagem slide pag 4">
+            <ol>
+                <li>O processo bloqueia aguardando entrada</li>
+                <li>O escalonador seleciona outro processo</li>
+                <li>O escalonador seleciona esse processo</li>
+                <li>A entrada torna-se disponível</li>
+            </ol>
+            <h2>Camadas de processos</h2>
+            <img src="images/camadaProcessos.png" alt="Imagem slide pag 5">
+            <ul>
+                <li>Camada mais inferior de um SO estruturado por processos
+                    (trata interrupções, escalonamento, espaço de endereçamento)</li>
+                <li>Acima daquela camada estão os processos sequenciais</li>
+            </ul>
+            <h2>Escalonamento de processos</h2>
+            <ul>
+                <li>A parte do sistema operacional responsável por essa decisão é chamada escalonador.
+                    O algoritmo usado para tal é chamado de algoritmo de escalonamento.</li>
+                <li>Para que um processo não execute tempo demais, são usadas interrupções de relógio</li>
+            </ul>
+            <h2>Implementação de processos</h2>
+            <p>Processo = estrutura de dados</p>
+            <h2>Múltiplos processos</h2>
+            <img src="images/multiplosProcessos.png" alt="">
+            <p>PCB = Process Control Block, mantém info de gerenciamento do processo</p>
+            <h2>Threads</h2>
+            <p>Uma thread é uma linha de execução de código
+                que executa em paralelo com outras linhas do
+                mesmo processo, compartilhando seu espaço de
+                memória.</p>
+            <h2>Diferenças entre threads e processos</h2>
+            <p>Vantagens das threads:</p>
+            <ul>
+                <li>Mais rápidas de criar</li>
+                <li>Como compartilham o mesmo espaço de endereçamento
+                    a comunicação entre elas é mais rápida.</li>
+            </ul>
+            <p>Desvantagens:</p>
+            <ul>
+                <li>Tornam o código mais complexo.</li>
+            </ul>
+            <h2>Motivação para threads: Concorrência</h2>
+            <p>Problemas:</p>
+            <ul>
+                <li>Programas que precisam de mais poder computacional</li>
+                <li>Dificuldade de implementação de CPUs mais rápidas</li>
+                <li>Processos gastam tempo demais com entrada e saída</li>
+            </ul>
+            <p>Solução:</p>
+            <ul>
+                <li>Construção de computadores capazes de executar várias tarefas simultaneamente</li>
+            </ul>
+            <h2>Problemas com concorrência</h2>
+            <ul>
+                <li>Não determinismo</li>
+                <li>Dependência de velocidade (depende de qual função terminar primeiro)</li>
+                <li>Starvation: processo de baixa prioridade precisa de um recurso que nunca é fornecido a ele.</li>
+                <li>Deadlock: dois ou mais processos bloqueiam sua execuçãopois um precisa de um recurso bloqueado pelo outro</li>
+            </ul>
+            <h2>Modelo de thread</h2>
+            <p>Itens por thread: contador de programa, registradores
+                pilha e estado. </p>
+            <h2>Implementação de threads de usuário</h2>
+            <img src="images/threadUsuario.png" alt="">
+            <p>Vantagens das threads em modo usuário:</p>
+            <ul>
+                <li>Mais escaláveis (sem espaço de tabela ou pilha no núcleo)</li>
+                <li>Permitem personalização do escalonamento</li>
+                <li>Exigem menos transições entre modo usuário e modo núcleo.
+                    Troca de contexto eficiente entre threads.</li>
+            </ul>
+            <p>Desvantagens das threads em modo usuário:</p>
+            <ul>
+                <li>É difícil implementar chamadas de sistema com bloqueio.</li>
+                <li>Page faults bloqueiam todas as threads de um processo</li>
+                <li>Exigem uma infraestrutura adicional de tempo de execução</li>
+                <li>Não se beneficiam de suporte de hardware para acelerar múltiplas threads</li>
+            </ul>
+            <h2>Implementação de threads de núcleo</h2>
+            <img src="images/threadNucleo.png" alt="">
+            <ul>
+                <li>Não apresentam vários dos problemas das threads em modo usuário</li>
+                <li>Mais pesadas em termos de consumo de recursos, overhead na criação</li>
+                <li>Pouca flexibilidade para gerenciar o escalonamento</li>
+                <li>Comumente recicladas</li>
+            </ul>
+            <h2>Implementações híbridas</h2>
+            <p>Multiplexação de threads de usuário sobre threads de núcleo</p>
+            <img src="images/threadHibrida.png" alt="">
+        </div>
     </body>
 </html>

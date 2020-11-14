@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">   
+        <link rel="stylesheet" href="styleResumo2.html">
+        <meta charset="UTF-8">
+        <title>Sistemas distribuídos 1</title>
+    </head>
+    <body>
+        <div id="contentBox">
+            <div id="titleBox">
+                <a href="index.html">⬅ voltar resumão</a>
+                <h1>🤓 RESUMO: Sistemas distribuídos 1 💻</h1>
+                <p class="subtitle">Multiprocessador, multicomputador e sistemas distribuídos.</p>
+            </div>
+            <h2>Necessidade de poder computacional</h2>
+            <ul>
+                <li>No passado o foco era no aumento da velocidade de CPUs.</li>
+                <li>Necessidade de dispositivos menores.</li>
+                <li>Problema: dissipação de calor com dispositivos menores.</li>
+                <li>Solução: paralelismo.
+                    <ol type="a">
+                        <li>multiprocessador (compartilham memoria)</li>
+                        <li>multicomputador (uma interface de rede e varios computadores com sua propria memoria)</li>
+                        <li>sistema distribuído (computadores completos + internet)</li>
+                    </ol>
+                </li>
+            </ul>
+            <img src="images/sistDistr.png" alt="multiprocessador, multicomputador, sistema distribuido">
+
+            <h2>Multiprocessadores</h2>
+            <ul>
+                <li>Sistema computacional composto por 2 ou mais processadores que compartilham uma memória em comum.</li>
+                <li>Compartilhamento de memória usado como mecanismo de comunicação.</li>
+                <li>Um programa executando em qualquer CPU tem seu próprio espaço de endereçamento.</li>
+                <li>Condição de corrida entre os diferentes CPU usando a memória.</li>
+                <li>S.O. precisa fazer o gerenciamento da arquitetura multiprocessada.</li>
+            </ul>
+
+            <h2>Acesso uniforme à memória</h2>
+            <p>A memória é compartilhada e o tempo de acesso à cpu eh igual pra qualquer processador.</p>
+            <img src="images/barramento.png" alt="Abordagem baseada em barramento">
+            <p>Abordagem baseada em barramento (barramento funciona como um gargalo).</p>
+            <img src="images/barramentoCruzado.png" alt="barramentoCruzado">
+            <p>Abordagem baseada em barramentos cruzados.</p>
+
+            <h2>Acesso não uniforme à memória</h2>
+            <img src="images/acessoNaoUniforme.png" alt="acessoNaoUniforme">
+            <p>Cada processador tem uma memória próxima.</p>
+
+            <h2>Sistema operacional</h2>
+            <img src="images/so.png" alt="">
+            <p>(1) Cada processador tem sua própria cópia do seu sistema operacional e a memória é dividida pra
+                cada um dos processadores.</p>
+            <p>Problemas: balanceamento de carga.</p>
+            <p>(2) Solução:</p>
+            <ul>
+                <li>CPU Mestre: sistema operacional (mas também pode funcionar como um gargalo)</li>
+                <li>Outras cpus: rodam processos de usuário</li>
+            </ul>
+            <p>(3) SMP: multiprocessadores simétricos. Uma única instância do sistema operacional compartilhada pelas CPUs.</p>
+
+            <h2>Multicomputadores</h2>
+            <img src="images/multicomputador.png" alt="multicomputador">
+            <ul>
+                <li>Também conhecido como cluster computers.</li>
+                <li>Componente básico: um PC simplificado com interface de rede de alta performance.</li>
+                <li>CPUs fortemente acopladas, cada uma com sua própria memória. Geralmente, no mesmo espaço físico.</li>
+                <li>Comunicação via passagem de mensagens. Usualmente, transmissão é realizada através de pacotes.</li>
+                <li>Mesmo S.O., sistemas de arquivos e uma única administração.</li>
+            </ul>
+
+            <h2>Compartilhamento de memória distribuído</h2>
+            <img src="images/memDistribuida.png" alt="Compartilhamento de memória distribuído">
+            <p>O software pode criar uma interface entre os computadores para compartilhar dados como se fosse uma memória.</p>
+        
+            <h2>Sistemas distribuídos</h2>
+            <ul>
+                <li>Coleção de computadores independentes que aparenta ao usuário com um único sistema correspondente.</li>
+                <li>Computadores fracamente acoplados e geograficamente distribuídos.</li>
+                <li>Comunicação via passagem de mensagens.</li>
+                <li>Exemplo: site de busca, diversos data centers espalhados ao redor do mundo e
+                    sistema de armazenamento distribuido que oferece acesso a um grande conjunto de dados.</li>
+            </ul>
+
+            <h2>Objetivos</h2>
+            <ul>
+                <li>Compartilhamento de recursos</li>
+                <li>Transparência na distribuição</li>
+                <li>Openness – Capacidade do sistema ser estendido e reimplementado de diversas formas</li>
+                <li>Segurança</li>
+                <li>Escalabilidade</li>
+                <li>Dependabilidade</li>
+                <li>Concorrência</li>
+                <li>Qualidade de Serviço</li>
+            </ul>
+
+            <h2>Redes de computadores</h2>
+            <ul>
+                <li>Sistemas distribuídos são construídos em cima de redes de computadores.</li>
+                <li>Duas categorias representativas:
+                    <ul>
+                        <li>LAN – Local Area Networks</li>
+                        <li>WAN – Wide</li>
+                    </ul>
+                </li>
+                <li>Serviços
+                    <ul>
+                        <li>Orientado a conexão: para existir comunicação é necessária uma conexão (envia informação com a conexão).</li>
+                        <li>Não orientado a conexão: não precisa existir a conexão para se comunicar (envia a informação antes da conexão).</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h2>Protocolo de redes</h2>
+            <ul>
+                <li>Conjunto de regras que determinam como computadores devem se comunicar.</li>
+                <li>Adotam uma pilha de protocolos.
+                    <ul>
+                        <li>Application layer (HTTP, FTP, POP).</li>
+                        <li>Transport layer (TCP, UDP).</li>
+                        <li>Internet protocol layer (IP).</li>
+                        <li>Network access layer (ethernet & net card).</li>
+                    </ul>
+                </li>
+                <li>Protocolos representativos da internet:
+                    <ul>
+                        <li>IP: protocolo de datagramas.</li>
+                        <li>TCP (transmission control protocol): usualmente funciona por cima do protocolo IP.
+                            Comunicação orientada à conexão.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h2>Computação móvel e ubíqua</h2>
+            <img src="images/ubiqua.png" alt="">
+            <p>Computadores móveis, computadores espalhados em todos os locais.</p>
+
+            <h2>Cloud computing</h2>
+            <p>Provimento de serviços sem que o cliente precise ter aquilo instalado.</p>
+        </div>
+    </body>
+</html>

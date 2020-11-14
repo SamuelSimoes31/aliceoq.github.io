@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">   
+        <link rel="stylesheet" href="styleResumo2.html">
+        <meta charset="UTF-8">
+        <title>Sistemas distribuídos 2</title>
+    </head>
+    <body>
+        <div id="contentBox">
+            <div id="titleBox">
+                <a href="index.html">⬅ voltar resumão</a>
+                <h1>🤓 RESUMO: Sistemas distribuídos 2 💻</h1>
+                <p class="subtitle">Arquitetura, middlewares.</p>
+            </div>
+            
+            <h2>Arquitetura</h2>
+            <ul>
+                <li>Arquitetura de um sistema é sua estrutura em termos dos componentes e seus relacionamentos.</li>
+                <li>Objetivo: garantir que a estrutura satisfará as demandas presentes e futuras.</li>
+                <li>Elementos de uma arquitetura:
+                    <ul>
+                        <li>Entidades comunicantes (ex: processos).</li>
+                        <li>Paradigma de comunicação (ex: invocação remota).</li>
+                        <li>Funções e responsabilidades (cliente-servidor).</li>
+                        <li>Mapeamento (ex: mapemento de serviços e múltipos servidores).</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h2>Cliente-servidor</h2>
+            <p>Duas arquiteturas representativas: cliente-servidor e peer-to-peer.</p>
+
+            <h3>Cliente-servidor:</h3>
+            <img src="images/clienteServidor.png" alt="clienteServidor">
+            <ul>
+                <li>Historicamente, uma das mais importantes e adotadas.</li>
+                <li>Servidor: um processo implementando e disponibilizando um serviço específico.</li>
+                <li>Cliente: um processo que requisita um serviço de um servidor através do envio
+                    de uma requisição e a espera de uma resposta.</li>
+                <li>Potencialmente, clientes e servidores ficam em máquinas separadas.</li>
+                <li>Servidores podem se tornar clientes de outros servidores.</li>
+                <li>Abordagem centralizada.</li>
+            </ul>
+
+            <h3>Peer-to-peer</h3>
+            <img src="images/peerToPeer.png" alt="peerToPeer">
+            <ul>
+                <li>Todos os processos (peers) possuem funções similares.</li>
+                <li>Não existe uma distinção entre cliente e servidor.</li>
+                <li>Oferecem a mesma interface para os outros projetos.</li>
+                <li>Abordagem descentralizada.</li>
+                <li>Maior escabilidade para compartilhamento de recursos.</li>
+                <li>Volatilidade nos nós.</li>
+                <li>Complexidade maior que a abordagem cliente-servidor.</li>
+            </ul>
+
+            <h2>Middleware</h2>
+            <p>Um dos principais objetivos de SD é transformar um conjunto de nós fracamente
+                acoplados e heterogêneos em um sistema coerente.</p>
+            <ul>Middleware:
+                <li>É uma camada de software em cima do sistema operacional.</li>
+                <li>Provê estruturas de dados e operações que permitem processos/usuários operarem em conjunto de forma consistente</li>
+                <li>Tanenbaum:  É o S.O dos sistemas distribuídos. Não é necessariamente um S.O.</li>
+            </ul>
+
+            <h2>Remote Procedure Call (RPC)</h2>
+            <img src="images/RPC.png" alt="RPC">
+            <ul>
+                <li>Chamada de procedimentos localizados em outras máquinas.</li>
+                <li>Chamada remota assemelha-se a uma chamada local de procedimento.</li>
+                <li>Alguns middleware são baseados nesta técnica.</li>
+                <li>Cliente:
+                    <ul>
+                        <li>Adota uma biblioteca de procedimento – Client stub, Server stub</li>
+                        <li>Client stub – representa o procedimento do servidor no espaço de endereçamento do cliente</li>
+                        <li>Servidor adota Server stub – transformar requisições remotas oriundas da rede em chamadas locais</li>
+                        <li>Marshaling – Empacotamento dos parâmetros em uma mensagem</li>
+                        <li>Unmarshaling – Desempacotamento dos parâmetros</li>
+                        <li>Usualmente, adota-se uma linguagem de definição de interface para geração dos stubs</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h2>Object-based middleware</h2>
+            <img src="images/objectBased.png" alt="objectBased">
+            <ul>
+                <li>Baseado no paradigma orientado a objeto. exemplo: CORBA (Common Object Request Broker Architecture).</li>
+                <li>Abordagem baseada em cliente-servidor:
+                    <ul>
+                        <li>Processos nas máquinas clientes podem requisitar operações em objetos localizados em máquinas servidoras.</li>
+                    </ul>
+                </li>
+                <li>Object Request Broker (ORB) – Intermédio na comunicação cliente-servidor:
+                    <ul>
+                        <li>Abstrai todos os detalhes de baixo nível da comunicação (ex: localização do servidor).</li>
+                        <li>Comunicação entre ORBs – Internet InterORB Protocol.</li>
+                    </ul>
+                </li>
+                <li>Adoção de uma Interface Definition Language (IDL) –
+                    Especificação das interfaces dos objetos (ex: métodos e parâmetros).</li>
+            </ul>
+
+            <h2>Publish/Subscribe</h2>
+            <img src="images/publish.png" alt="">
+            <ul>
+                <li>Cada processo pode ser produtor e/ou consumidor de informação.</li>
+                <li>Produtor faz o broadcast quando uma nova informação estiver disponível (publishing).</li>
+                <li>Processos interessados em certas informações fazem o subscribe (inscrição) para os assuntos de interesse.</li>
+                <li>Inscrição é feita através da comunicação com um  processo daemon, o qual está localizado na mesma máquina que monitora as mensagens.</li>
+                <li>Roteadores de informação (Information routers) – Ajudam na distribuição de mensagens em WANs e Internet</li>
+            </ul>
+
+            <h2>Web Services</h2>
+            <img src="images/webservices.png" alt="">
+            <ul>
+                <li>Um serviço disponibilizado via internet.</li>
+                <li>Adoção de um conjunto de padrões.</li>
+                <li>Simple Object Access Protocol (SOAP) - Troca de mensagens via uso de XML (tipicamente usando HTTP).</li>
+                <li>Directory Service – guarda descrições de serviço utilizando o padrão UDDI (Universal, Description, Discovery and Integration).</li>
+                <li>Serviços descritos através Web Services Definition Language (WSDL).</li>
+            </ul>
+        </div>
+    </body>
+</html>

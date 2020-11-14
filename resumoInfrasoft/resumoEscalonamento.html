@@ -1,181 +1,220 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">   
+        <link rel="stylesheet" href="styleResumo2.html">
         <meta charset="UTF-8">
         <title>Escalonamento</title>
     </head>
-    <body style="margin-left:100px">
-        <a href="index.html">⬅ voltar resumão</a>
-        <h1>🤓 RESUMO: Escalonamento 💻</h1>
-        <p>Tipos de processos, interrupção, preempção e multiprogramação</p>
-        <hr align="left" width="650px">
-        <h2>Modelo de multiprogramação</h2>
-        <ul>
-            <li>Multiprogramação de quatro programas</li>
-            <li>Modelo conceitual de 4 processos sequenciais, independentes</li>
-            <li>Somente um programa está ativo a cada momento</li>
-        </ul>
-        <h2>Tipos de S.O.</h2>
-        <ul>
-            <li>Monotarefa</li>
-            <li>Multitarefa</li>
-            <li>Monousuário</li>
-            <li>Multiusuário</li>
-        </ul>
-        <h3>Como evitar que um processo monopolize o sistema?</h3>
-        <p>Compartilhamento de tempo:</p>
-        <ul>
-            <li>Permite sistemas interativos (entrada/saída)</li>
-            <li>Requer temporizadores (timers)</li>
-            <li>Interrupções</li>
-        </ul>
-        <h2>Multiprogramação</h2>
-        <ul>
-            <li>O índice de processos contém o apontador para a lista de processos.</li>
-            <li>PC (Program Counter) = contador de programas</li>
-            <li>Uma troca de processos consiste em trocar o valor dos registradores de contexto da CPU</li>
-        </ul>
-        <h2>Requisitos para multiprogramação</h2>
-        <p>Suporte do hardware</p>
-        <ul>
-            <li>temporizadores</li>
-            <li>interrupções</li>
-            <li>proteção de memória</li>
-        </ul>
-        <p>Suporte do S.O.</p>
-        <ul>
-            <li>Escalonamento dos processos</li>
-            <li>Alocação de memória</li>
-            <li>Gerenciamento dos periféricos</li>
-        </ul>
-        <h2>Comportamentos de processos</h2>
-        <p>Surtos de uso da CPU alternam-se com períodos de espera por E/S</p>
-        <ul>
-            <li>processo limitado por CPU</li>
-            <li>processo limitado por E/S</li>
-        </ul>
-        <h2>Tipos de processo</h2>
-        <h3>Batch (lote) x Interativos</h3>
-        <h3>CPU-bound</h3>
-        <ul>
-            <li>gasta a maior parte do seu tempo usando a CPU</li>
-            <li>longos tempos de execução e baixo volume de comunicação entre processos.
-                ex:  aplicações científicas, engenharia e outras aplicações que demandam alto desempenho de computação.</li>
-        </ul>
-        <h3>I/O-bound:</h3>
-        <ul>
-            <li>passa a maior parte do tempo esperando por dispositivos de E/S.</li>
-        </ul>
-        <h2>A importância das interrupções</h2>
-        <p>Num sistema simples, CPU deve esperar a execução do comando de E/S.</p>
-        <p>Um sistema com interrupção não fica esperando.</p>
-        <p>A CPU solicita a operação de E/S e fica executando outras tarefas até ser interrompida pelo disco.</p>
-        <h2>Operação Básica da CPU</h2>
-        <img src="images/operacaoBasica.png" alt="">
-        <h2>Processo de interrupção</h2>
-        <img src="images/procInterrupcao.png" alt="procInterrupcao">
-        <h2>Algoritmos de Escalonamento</h2>
-        <h3>Escalonamento de processos</h3>
-        <ul>
-            <li>Quando um ou mais processos estão prontos para ser executados, o SO decide qual executar primeiro</li>
-            <li>A parte do sistema operacional responsável por essa decisão é chamada escalonador</li>
-            <li>O algoritmo usado para tal é chamado de algoritmo de escalonamento</li>
-        </ul>
-        <h3>Abstração</h3>
-        <p>Uma máquina para cada processo => paralelismo real</p>
-        <h3>Multiprogramação</h3>
-        <p>Compartilhamento de tempo => pseudo-paralelismo</p>
-        <h3>Filas de escalonamento</h3>
-        <p>High-level (Long-Term)</p>
-        <ul>
-            <li>Decide quantos programas são admitidos no sistema (i.e., grau de multiprogramação)</li>
-            <li>Aloca memória e cria um processo</li>
-        </ul>
-        <p>Short-term</p>
-        <ul>
-            <li>Decide qual processo deve ser executado (processos no estado de pronto)</li>
-        </ul>
-        <p>I/O</p>
-        <ul>
-            <li>Decide qual processo (com I/O) pendente deve ser tratado pelo dispositivo de I/O</li>
-        </ul>
-        <h3>Categorias de algoritmos de escalonamento</h3>
-        <ul>
-            <li>Em lote (batch)</li>
-            <li>Interativo</li>
-            <li>Tempo-real</li>
-        </ul>
-        <h3>Objetivos dos algoritmos de escalonamento</h3>
-        <img src="images/objetivosEsc.png" alt="objetivosEsc">
-        <h3>Características de escalonamento</h3>
-        <ul>
-            <li>Justiça (fairness): Todos os processos têm chance de usar o processador</li>
-            <li>Eficiência: Taxa de ocupação do processador ao longo do tempo</li>
-            <li>Tempo de Resposta: Tempo entre a ocorrência de um evento e o termino da ação correspondente</li>
-            <li>Turnaround (tempo de retorno): Intervalo entre o tempo de submissão de um processo e o tempo de conclusão (total),
-                soma dos períodos esperando para entrar na memória, na fila de ready, executando na CPU e realizando operações de I/O</li>
-            <li>Throughput (vazão): No. de “jobs” (processos) executados por unidade de tempo</li>
-        </ul>
-        <h3>Tipos de escalonamento</h3>
-        <p>Mecanismos de escalonamento:</p>
-        <ul>
-            <li>Preemptivo x Não-preemptivo</li>
-            <li>Preemptivo = com interrupções de relógio. Um algoritmo/sistema operacional é preemptivo
-                quando pode retirar um processo da CPU antes do término da sua execução.</li>
-        </ul>
-        <p>Políticas de escalonamento:</p>
-        <ul>
-            <li>Round-robin</li>
-            <li>FIFO (first-in first-out)</li>
-            <li>Híbridos: partições de lote, MFQ (multilevel feedback queue)</li>
-            <li>SJF – Shortest Job First</li>
-            <li>SRJN – Shortest Remaining Job Next</li>
-        </ul>
-        <h3>Escalonamento preemptivo</h3>
-        <ul>
-            <li>Permite a suspensão temporária de processos</li>
-            <li>Quantum ou time-slice: período de tempo durante o qual um processo usa o processador a cada vez</li>
-        </ul>
-        <h3>Problema das trocas de processos</h3>
-        <p>Mudar de um processo para outro requer um certo tempo para a administração: troca de contexto</p>
-        <p>Um quantum pequeno causa muitas trocas de contexto, então diminui a eficiência da CPU</p>
-        <p> Um quantum longo torna o tempo de resposta inaceitável para tarefas interativas curtas, ruim para processos interativos.</p>
-        <h3>Escalonamento em sistemas de lote</h3>
-        <h4>First-in first-out</h4>
-        <ul>
-            <li>Uso de uma lista de processos sem prioridade</li>
-            <li>Escalonamento não-preemptivo</li>
-            <li>Simples e justo</li>
-            <li>Bom para sistemas em batch (lote)</li>
-        </ul>
-        <h4>Shortest job first (não-preemptivo)</h4>
-        <h4>Shortest Remaining Job Next (preemptivo)</h4>
-        <h3>Escalonamento em sistemas interativos</h3>
-        <ul>
-            <li>Round-robin</li>
-            <li>Proridade</li>
-            <li>Multiple feedback queue</li>
-            <li>Fração justa (ou fair share)</li>
-        </ul>
-        <h4>Round-robin</h4>
-        <p>Escalonamento por alternância circular</p>
-        <p>Fila de processos executáveis, mesmo quantum para todos.</p>
-        <h4>Prioridade</h4>
-        <p>Prioridades atribuídas dinâmica ou estaticamente</p>
-        <p>Evitando starvation no escalonamento por prioridade:
-            Redução dinâmica (a cada interrupção de relógio) de prioridade,
-            se cair abaixo de um limite é a vez de outro processo.</p>
-        <h4>Multiple feedback queue</h4>
-        <p>MFQ usa prioridades dinâmicas.</p>
-        <p>Adaptação baseada no  comportamento de cada processo (CPU-bound ou I/O-bound).</p>
-        <p>Usada em vários SOs reais: MacOS, Windows 8, GNU/Linux (atualmente é fração justa).</p>
-        <p>Novos processos entram na primeira fila (prioridade mais alta).</p>
-        <p>Se acabar o quantum desce um nível, se requisitar E/S sobe um nível.</p>
-        <h4>Escalonamento por fração justa</h4>
-        <p>Leva em conta os usuários, não apenas os processos. É comum em redes de computadores.</p>
-        <p>Pode garantir percentagem de uso dos recursos a cada usuário.</p>
-        <p>Alternativa: maximizar o menor tempo de uso de CPU. Não maximiza o throughput, mas aumenta a responsividade.</p>
-        <h3>Escalonamento de threads</h3>
-        <img src="images/escalonamentoThread.png" alt="escalonamentoThread">
+    <body>
+        <div id="contentBox">
+            <div id="titleBox">
+                <a href="index.html">⬅ voltar resumão</a>
+                <h1>🤓 RESUMO: Escalonamento 💻</h1>
+                <p class="subtitle">Tipos de processos, interrupção, preempção e multiprogramação</p>
+            </div>
+            <h2>Modelo de multiprogramação</h2>
+            <ul>
+                <li>Multiprogramação de quatro programas</li>
+                <li>Modelo conceitual de 4 processos sequenciais, independentes</li>
+                <li>Somente um programa está ativo a cada momento</li>
+            </ul>
+            
+            <h2>Tipos de S.O.</h2>
+            <ul>
+                <li>Monotarefa</li>
+                <li>Multitarefa</li>
+                <li>Monousuário</li>
+                <li>Multiusuário</li>
+            </ul>
+            
+            <h3>Como evitar que um processo monopolize o sistema?</h3>
+            <p>Compartilhamento de tempo:</p>
+            <ul>
+                <li>Permite sistemas interativos (entrada/saída)</li>
+                <li>Requer temporizadores (timers)</li>
+                <li>Interrupções</li>
+            </ul>
+            
+            <h2>Multiprogramação</h2>
+            <ul>
+                <li>O índice de processos contém o apontador para a lista de processos.</li>
+                <li>PC (Program Counter) = contador de programas</li>
+                <li>Uma troca de processos consiste em trocar o valor dos registradores de contexto da CPU</li>
+            </ul>
+            
+            <h2>Requisitos para multiprogramação</h2>
+            <p>Suporte do hardware</p>
+            <ul>
+                <li>temporizadores</li>
+                <li>interrupções</li>
+                <li>proteção de memória</li>
+            </ul>
+            <p>Suporte do S.O.</p>
+            <ul>
+                <li>Escalonamento dos processos</li>
+                <li>Alocação de memória</li>
+                <li>Gerenciamento dos periféricos</li>
+            </ul>
+            
+            <h2>Comportamentos de processos</h2>
+            <p>Surtos de uso da CPU alternam-se com períodos de espera por E/S</p>
+            <ul>
+                <li>processo limitado por CPU</li>
+                <li>processo limitado por E/S</li>
+            </ul>
+            
+            <h2>Tipos de processo</h2>
+            
+            <h3>Batch (lote) x Interativos</h3>
+            
+            <h3>CPU-bound</h3>
+            <ul>
+                <li>gasta a maior parte do seu tempo usando a CPU</li>
+                <li>longos tempos de execução e baixo volume de comunicação entre processos.
+                    ex:  aplicações científicas, engenharia e outras aplicações que demandam alto desempenho de computação.</li>
+            </ul>
+            
+            <h3>I/O-bound:</h3>
+            <ul>
+                <li>passa a maior parte do tempo esperando por dispositivos de E/S.</li>
+            </ul>
+            
+            <h2>A importância das interrupções</h2>
+            <p>Num sistema simples, CPU deve esperar a execução do comando de E/S.</p>
+            <p>Um sistema com interrupção não fica esperando.</p>
+            <p>A CPU solicita a operação de E/S e fica executando outras tarefas até ser interrompida pelo disco.</p>
+            
+            <h2>Operação Básica da CPU</h2>
+            <img src="images/operacaoBasica.png" alt="">
+            
+            <h2>Processo de interrupção</h2>
+            <img src="images/procInterrupcao.png" alt="procInterrupcao">
+            
+            <h2>Algoritmos de Escalonamento</h2>
+            
+            <h3>Escalonamento de processos</h3>
+            <ul>
+                <li>Quando um ou mais processos estão prontos para ser executados, o SO decide qual executar primeiro</li>
+                <li>A parte do sistema operacional responsável por essa decisão é chamada escalonador</li>
+                <li>O algoritmo usado para tal é chamado de algoritmo de escalonamento</li>
+            </ul>
+            
+            <h3>Abstração</h3>
+            <p>Uma máquina para cada processo => paralelismo real</p>
+            
+            <h3>Multiprogramação</h3>
+            <p>Compartilhamento de tempo => pseudo-paralelismo</p>
+            
+            <h3>Filas de escalonamento</h3>
+            <p>High-level (Long-Term)</p>
+            <ul>
+                <li>Decide quantos programas são admitidos no sistema (i.e., grau de multiprogramação)</li>
+                <li>Aloca memória e cria um processo</li>
+            </ul>
+            <p>Short-term</p>
+            <ul>
+                <li>Decide qual processo deve ser executado (processos no estado de pronto)</li>
+            </ul>
+            <p>I/O</p>
+            <ul>
+                <li>Decide qual processo (com I/O) pendente deve ser tratado pelo dispositivo de I/O</li>
+            </ul>
+            <h3>Categorias de algoritmos de escalonamento</h3>
+            <ul>
+                <li>Em lote (batch)</li>
+                <li>Interativo</li>
+                <li>Tempo-real</li>
+            </ul>
+            
+            <h3>Objetivos dos algoritmos de escalonamento</h3>
+            <img src="images/objetivosEsc.png" alt="objetivosEsc">
+            
+            <h3>Características de escalonamento</h3>
+            <ul>
+                <li>Justiça (fairness): Todos os processos têm chance de usar o processador</li>
+                <li>Eficiência: Taxa de ocupação do processador ao longo do tempo</li>
+                <li>Tempo de Resposta: Tempo entre a ocorrência de um evento e o termino da ação correspondente</li>
+                <li>Turnaround (tempo de retorno): Intervalo entre o tempo de submissão de um processo e o tempo de conclusão (total),
+                    soma dos períodos esperando para entrar na memória, na fila de ready, executando na CPU e realizando operações de I/O</li>
+                <li>Throughput (vazão): No. de “jobs” (processos) executados por unidade de tempo</li>
+            </ul>
+            
+            <h3>Tipos de escalonamento</h3>
+            <p>Mecanismos de escalonamento:</p>
+            <ul>
+                <li>Preemptivo x Não-preemptivo</li>
+                <li>Preemptivo = com interrupções de relógio. Um algoritmo/sistema operacional é preemptivo
+                    quando pode retirar um processo da CPU antes do término da sua execução.</li>
+            </ul>
+            <p>Políticas de escalonamento:</p>
+            <ul>
+                <li>Round-robin</li>
+                <li>FIFO (first-in first-out)</li>
+                <li>Híbridos: partições de lote, MFQ (multilevel feedback queue)</li>
+                <li>SJF – Shortest Job First</li>
+                <li>SRJN – Shortest Remaining Job Next</li>
+            </ul>
+            
+            <h3>Escalonamento preemptivo</h3>
+            <ul>
+                <li>Permite a suspensão temporária de processos</li>
+                <li>Quantum ou time-slice: período de tempo durante o qual um processo usa o processador a cada vez</li>
+            </ul>
+            
+            <h3>Problema das trocas de processos</h3>
+            <p>Mudar de um processo para outro requer um certo tempo para a administração: troca de contexto</p>
+            <p>Um quantum pequeno causa muitas trocas de contexto, então diminui a eficiência da CPU</p>
+            <p> Um quantum longo torna o tempo de resposta inaceitável para tarefas interativas curtas, ruim para processos interativos.</p>
+            
+            <h3>Escalonamento em sistemas de lote</h3>
+            
+            <h4>First-in first-out</h4>
+            <ul>
+                <li>Uso de uma lista de processos sem prioridade</li>
+                <li>Escalonamento não-preemptivo</li>
+                <li>Simples e justo</li>
+                <li>Bom para sistemas em batch (lote)</li>
+            </ul>
+            
+            <h4>Shortest job first (não-preemptivo)</h4>
+            
+            <h4>Shortest Remaining Job Next (preemptivo)</h4>
+            
+            <h3>Escalonamento em sistemas interativos</h3>
+            <ul>
+                <li>Round-robin</li>
+                <li>Proridade</li>
+                <li>Multiple feedback queue</li>
+                <li>Fração justa (ou fair share)</li>
+            </ul>
+            
+            <h4>Round-robin</h4>
+            <p>Escalonamento por alternância circular</p>
+            <p>Fila de processos executáveis, mesmo quantum para todos.</p>
+            
+            <h4>Prioridade</h4>
+            <p>Prioridades atribuídas dinâmica ou estaticamente</p>
+            <p>Evitando starvation no escalonamento por prioridade:
+                Redução dinâmica (a cada interrupção de relógio) de prioridade,
+                se cair abaixo de um limite é a vez de outro processo.</p>
+            
+            <h4>Multiple feedback queue</h4>
+            <p>MFQ usa prioridades dinâmicas.</p>
+            <p>Adaptação baseada no  comportamento de cada processo (CPU-bound ou I/O-bound).</p>
+            <p>Usada em vários SOs reais: MacOS, Windows 8, GNU/Linux (atualmente é fração justa).</p>
+            <p>Novos processos entram na primeira fila (prioridade mais alta).</p>
+            <p>Se acabar o quantum desce um nível, se requisitar E/S sobe um nível.</p>
+            
+            <h4>Escalonamento por fração justa</h4>
+            <p>Leva em conta os usuários, não apenas os processos. É comum em redes de computadores.</p>
+            <p>Pode garantir percentagem de uso dos recursos a cada usuário.</p>
+            <p>Alternativa: maximizar o menor tempo de uso de CPU. Não maximiza o throughput, mas aumenta a responsividade.</p>
+            
+            <h3>Escalonamento de threads</h3>
+            <img src="images/escalonamentoThread.png" alt="escalonamentoThread">
+        </div>
     </body>
 </html>

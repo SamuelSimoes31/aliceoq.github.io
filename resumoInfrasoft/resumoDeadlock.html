@@ -1,72 +1,89 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">  
+        <link rel="stylesheet" href="styleResumo2.html">
         <meta charset="UTF-8">
         <title>Deadlock</title>
     </head>
-    <body style="margin-left:100px">
-        <a href="index.html">⬅ voltar resumão</a>
-        <h1>🤓 RESUMO: Deadlock 💻</h1>
-        <hr align="left" width="650px">
-        <h2>Obtenção de recursos</h2>
-        <ol>
-            <li>Requisitar o recurso.</li>
-            <li>Usar o recurso.</li>
-            <li>Liberar o recurso.</li>
-        </ol>
-        <h2>O que é um deadlock/impasse?</h2>
-        <p>Uma situação onde todos os processos de um grupo
-            esperam por eventos que somente outro processo do
-            mesmo grupo pode fazer acontecer.</p>
-        <p>Como todos estão esperando, nenhum evento esperado acontece.</p>
-        <h2>Condições necessárias para a ocorrência de um deadlock</h2>
-        <ol>
-            <li>Exclusão mútua.</li>
-            <li>Posse e espera.</li>
-            <li>Não preempção.</li>
-            <li>Espera circular.</li>
-        </ol>
-        <h2>Modelagem de deadlocks</h2>
-        <img src="images/modelagemDlock.png" alt="modelagemDlock">
-        <h2>Estratégias para lidar com deadlocks</h2>
-        <ol>
-            <li>Ignorar o problema.</li>
-            <li>Detectar e recuperar. Deixar os impasses ocorrerem, detectar e recuperar.</li>
-            <li>Evitar dinamicamente por meio de alocação cuidadosa de recursos.</li>
-            <li>Prevenir, negando estruturalmente uma das quatro condições necessárias.</li>
-        </ol>
-        <h2>Detecção de deadlocks</h2>
-        <p>Duas estratégias:</p>
-        <ul>
-            <li>Procurar processos bloqueados há muito tempo;</li>
-            <li>Registrar alocação de recursos e verificar de há dependências circulares.</li>
-        </ul>
-        <h2>Algoritmo para detecção de deadlocks</h2>
-        <img src="images/deteccaoDlock.png" alt="deteccaoDlock">
-        <p>Busca em profundidade (depth-first search).</p>
-        <p>Aguarda uma árvore. Se durante a busca, encontrar
-            novamente um nó previamente visitado, gera um ciclo
-            (deadlock).</p>
-        <p>Se já visitou todas arestas de um dado nó, realiza
-            backtrack para o nó anterior. Ao realizar backtrack
-            para raiz e não conseguir continuar,  o subgrafo não
-            contém ciclos.</p>
-        <p>Se for válido para todos os nós, o grafo inteiro é livre de ciclo.</p>
-        <h2>Recuperação de deadlocks</h2>
-        <p>Recuperação por eliminação de processos.</p>
-        <p>Recuperação por retrocesso (rollback).</p>
-        <h2>Evitando deadlocks</h2>
-        <p>Alocar recursos de forma que deadlocks nunca aconteçam. Supondo que
-            alguma informação sobre a necessidade de recursos está disponível.</p>
-        <p>ex: algoritmo do banqueiro.</p>
-        <img src="images/banqueiro.png" alt="banqueiro">
-        <h2>Prevenção de impasses</h2>
-        <p>Pode ser realizada atacando a condição de:</p>
-        <ul>
-            <li>exclusão mútua: spooling</li>
-            <li>posse e espera: reserva de todos os recursos necessários antes de travar</li>
-            <li>não-preempção: permitir que um processo “roube temporariamente” um recurso de outro.</li>
-            <li>espera circular: ordenação numérica dos recursos.</li>
-        </ul>
+    <body>
+        <div id="contentBox">
+            <div id="titleBox">
+                <a href="index.html">⬅ voltar resumão</a>
+                <h1>🤓 RESUMO: Deadlock 💻</h1>
+                <p class="subtitle"></p>
+            </div>
+            <h2>Obtenção de recursos</h2>
+            <ol>
+                <li>Requisitar o recurso.</li>
+                <li>Usar o recurso.</li>
+                <li>Liberar o recurso.</li>
+            </ol>
+            
+            <h2>O que é um deadlock/impasse?</h2>
+            <p>Uma situação onde todos os processos de um grupo
+                esperam por eventos que somente outro processo do
+                mesmo grupo pode fazer acontecer.</p>
+            <p>Como todos estão esperando, nenhum evento esperado acontece.</p>
+            
+            <h2>Condições necessárias para a ocorrência de um deadlock</h2>
+            <ol>
+                <li>Exclusão mútua.</li>
+                <li>Posse e espera.</li>
+                <li>Não preempção.</li>
+                <li>Espera circular.</li>
+            </ol>
+            
+            <h2>Modelagem de deadlocks</h2>
+            <img src="images/modelagemDlock.png" alt="modelagemDlock">
+            
+            <h2>Estratégias para lidar com deadlocks</h2>
+            <ol>
+                <li>Ignorar o problema.</li>
+                <li>Detectar e recuperar. Deixar os impasses ocorrerem, detectar e recuperar.</li>
+                <li>Evitar dinamicamente por meio de alocação cuidadosa de recursos.</li>
+                <li>Prevenir, negando estruturalmente uma das quatro condições necessárias.</li>
+            </ol>
+            
+            <h2>Detecção de deadlocks</h2>
+            <p>Duas estratégias:</p>
+            <ul>
+                <li>Procurar processos bloqueados há muito tempo;</li>
+                <li>Registrar alocação de recursos e verificar de há dependências circulares.</li>
+            </ul>
+            
+            <h2>Algoritmo para detecção de deadlocks</h2>
+            <img src="images/deteccaoDlock.png" alt="deteccaoDlock">
+            <p>Busca em profundidade (depth-first search).</p>
+            <p>Aguarda uma árvore. Se durante a busca, encontrar
+                novamente um nó previamente visitado, gera um ciclo
+                (deadlock).</p>
+            <p>Se já visitou todas arestas de um dado nó, realiza
+                backtrack para o nó anterior. Ao realizar backtrack
+                para raiz e não conseguir continuar,  o subgrafo não
+                contém ciclos.</p>
+            <p>Se for válido para todos os nós, o grafo inteiro é livre de ciclo.</p>
+            
+            <h2>Recuperação de deadlocks</h2>
+            <p>Recuperação por eliminação de processos.</p>
+            <p>Recuperação por retrocesso (rollback).</p>
+            
+            <h2>Evitando deadlocks</h2>
+            <p>Alocar recursos de forma que deadlocks nunca aconteçam. Supondo que
+                alguma informação sobre a necessidade de recursos está disponível.</p>
+            <p>ex: algoritmo do banqueiro.</p>
+            <img src="images/banqueiro.png" alt="banqueiro">
+            
+            <h2>Prevenção de impasses</h2>
+            <p>Pode ser realizada atacando a condição de:</p>
+            <ul>
+                <li>exclusão mútua: spooling</li>
+                <li>posse e espera: reserva de todos os recursos necessários antes de travar</li>
+                <li>não-preempção: permitir que um processo “roube temporariamente” um recurso de outro.</li>
+                <li>espera circular: ordenação numérica dos recursos.</li>
+            </ul>
+        </div>
     </body>
 </html>
