@@ -21,7 +21,7 @@
                 registradores e variáveis.</p>
             <h2>Contexto de processo</h2>
             <p>É tudo que o processo precisa para sua execução, como processadores, memória, posição
-                em uso e seu espaço de endereçamento, estados de processor, etc.</p>
+                em uso e seu espaço de endereçamento (intervalo de endereços de memória que o processo pode acessar), estados de processo, etc.</p>
             <h2>Criação de processos</h2>
             <p>Principais eventos que levam à criação de processos:</p>
             <ul>
@@ -102,10 +102,10 @@
                 <li>Não determinismo</li>
                 <li>Dependência de velocidade (depende de qual função terminar primeiro)</li>
                 <li>Starvation: processo de baixa prioridade precisa de um recurso que nunca é fornecido a ele.</li>
-                <li>Deadlock: dois ou mais processos bloqueiam sua execuçãopois um precisa de um recurso bloqueado pelo outro</li>
+                <li>Deadlock: dois ou mais processos bloqueiam sua execução, pois um precisa de um recurso bloqueado pelo outro</li>
             </ul>
             <h2>Modelo de thread</h2>
-            <p>Itens por thread: contador de programa, registradores
+            <p>Itens por thread: contador de programa, registradores,
                 pilha e estado. </p>
             <h2>Implementação de threads de usuário</h2>
             <img src="images/threadUsuario.png" alt="">

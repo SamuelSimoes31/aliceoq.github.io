@@ -31,9 +31,10 @@
             
             <h2>Técnicas não apropriadas para exclusão mútua</h2>
             <ul>
-                <li>Desabilitação de Interrupções ao acessar região crítica, afeta o sistema pode ser multiprocessado, 
+                <li>Desabilitação de interrupções ao acessar região crítica, afeta o sistema que pode ser multiprocessado, 
                     e, portanto, não muito efetivo.</li>
-                <li>Variáveis de bloqueio (lock): mesmo problema do diretório de spool</li>
+                <li>Variáveis de bloqueio (lock): mesmo problema do diretório de spool (Spooling/Spool: os dados são colocados
+                    em um buffer/área da memória onde outro programa pode acessá-lo para processá-lo em um tempo futuro).</li>
             </ul>
             
             <h2>Espera ocupada com variáveis de bloqueio</h2>
@@ -80,7 +81,7 @@
             <img src="images/monitores.png" alt="monitores">
             <ul>
                 <li>Coleção de rotinas, variáveis e estruturas de dados.</li>
-                <li>Só um processo ativo no monitorem qualquer momento.</li>
+                <li>Só um processo ativo no monitor em qualquer momento.</li>
                 <li>Dependem de suporte linguístico (são construções da linguagem).</li>
                 <li>Usam mutexes e semáforos internamente.</li>
             </ul>
@@ -90,9 +91,9 @@
             <h2>Barreiras: Sincronização</h2>
             <img src="images/barreira.png" alt="barreira">
             <ul>
-                <li>processos se aproximando de uma barreira</li>
-                <li>todos os processos, exceto um, bloqueados pela barreira</li>
-                <li>último processo chega, todos passam</li>
+                <li>Processos se aproximando de uma barreira.</li>
+                <li>Todos os processos, exceto um, bloqueados pela barreira.</li>
+                <li>Último processo chega, todos passam.</li>
             </ul>
         </div>
     </body>

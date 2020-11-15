@@ -16,19 +16,19 @@
                 <p class="subtitle">proteção e relocação, paginação</p>
             </div>
 
-            <p>Idealmente, todo programador deseja dispor de memória: grande, rápida e não-volátil neste caso, depende da aplicação).</p>
+            <p>Idealmente, todo programador deseja dispor de memória: grande, rápida e não-volátil (neste caso, depende da aplicação).</p>
             <p>Hierarquia de memórias</p>
             <ul>
                 <li>pequena quantidade de memória rápida, de alto custo - cache</li>
                 <li>quantidade considerável de memória principal de velocidade média, custo médio</li>
                 <li>gigabytes de armazenamento em disco de velocidade e custo baixos</li>
             </ul>
-            <p>O gerenciamento de memória visa fazer uso eficiente da Hierarquia
+            <p>O gerenciamento de memória visa fazer uso eficiente da hierarquia
                 de memórias, para ajudar na execução da aplicações.</p>
             <h2>Como rodar um programa?</h2>
             <img src="images/rodarPrograma.png" alt="rodarPrograma">
             <ol>
-                <li>Dado o comando para executar um programa, é realizada uma seqüência de instruções para
+                <li>Dado o comando para executar um programa, é realizada uma sequência de instruções para
                     copiar código e dados doprograma objeto do disco para a memória principal.</li>
                 <li>PC aponta para o endereço de memória onde o programa foi escrito.</li>
                 <li>Processador executa instruções do programa trazidas da memória.</li>
@@ -62,7 +62,7 @@
                 <li>Alocação de espaço para uma pilha e uma área de dados, ambos em expansão.</li>
             </ol>
             <h2>Gerenciamento de memória livre</h2>
-            <img src="iamges/gerFreeMem.png" alt="gerenciamento de memoria livre">
+            <img src="images/gerFreeMem.png" alt="gerenciamento de memoria livre">
             <ol type="a">
                 <li>Parte da memória com 5 segmentos de processos (P) e 3 segmentos de memória livre (Hole – H).</li>
                 <li>Mapa de bits correspondente (Cada elemento da matriz representa um espaço de endereçamento; 1 para espaço ocupado e 0 para livre).</li>
@@ -72,7 +72,7 @@
             <h2>Memória virtual: Paginação</h2>
             <img src="images/paginacao.png" alt="paginacao">
             <p>Existe um conjunto de endereços que os programas podem gerar, esses endereços são chamados de endereços virtuais e formam o espaço de endereçamento virtual.</p>
-            <p>Nos computadores sem memória virtual, os endeços são colocados diretamente no barramento de memória. Já com a memória virtual,
+            <p>Nos computadores sem memória virtual, os endereços são colocados diretamente no barramento de memória. Já com a memória virtual,
                 os endereços vão para uma MMU (Memory Management Unit), que faz o mapeamento dos endereços virtuais em endereços físicos de memória.</p>
             <p>Quando um programa é maior do que o espaço de memória disponível, o espaço de endereçamento será dividido em páginas. Na memória física
                 teremos as molduras de página, que tem o mesmo tamanho da página.</p>

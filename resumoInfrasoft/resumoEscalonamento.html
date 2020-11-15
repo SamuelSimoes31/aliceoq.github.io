@@ -16,6 +16,7 @@
                 <p class="subtitle">Tipos de processos, interrupção, preempção e multiprogramação</p>
             </div>
             <h2>Modelo de multiprogramação</h2>
+            <img src="images/modeloMulti.png" alt="modeloMulti">
             <ul>
                 <li>Multiprogramação de quatro programas</li>
                 <li>Modelo conceitual de 4 processos sequenciais, independentes</li>
@@ -48,9 +49,9 @@
             <h2>Requisitos para multiprogramação</h2>
             <p>Suporte do hardware</p>
             <ul>
-                <li>temporizadores</li>
-                <li>interrupções</li>
-                <li>proteção de memória</li>
+                <li>Temporizadores</li>
+                <li>Interrupções</li>
+                <li>Proteção de memória</li>
             </ul>
             <p>Suporte do S.O.</p>
             <ul>
@@ -60,7 +61,7 @@
             </ul>
             
             <h2>Comportamentos de processos</h2>
-            <p>Surtos de uso da CPU alternam-se com períodos de espera por E/S</p>
+            <p>Surtos de uso da CPU alternam-se com períodos de espera por E/S.</p>
             <ul>
                 <li>processo limitado por CPU</li>
                 <li>processo limitado por E/S</li>
@@ -74,7 +75,7 @@
             <ul>
                 <li>gasta a maior parte do seu tempo usando a CPU</li>
                 <li>longos tempos de execução e baixo volume de comunicação entre processos.
-                    ex:  aplicações científicas, engenharia e outras aplicações que demandam alto desempenho de computação.</li>
+                    ex: aplicações científicas, engenharia e outras aplicações que demandam alto desempenho de computação.</li>
             </ul>
             
             <h3>I/O-bound:</h3>
@@ -153,7 +154,7 @@
             <ul>
                 <li>Round-robin</li>
                 <li>FIFO (first-in first-out)</li>
-                <li>Híbridos: partições de lote, MFQ (multilevel feedback queue)</li>
+                <li>Híbridos: partições de lote, MFQ (multilevel/multiple feedback queue)</li>
                 <li>SJF – Shortest Job First</li>
                 <li>SRJN – Shortest Remaining Job Next</li>
             </ul>
@@ -165,9 +166,9 @@
             </ul>
             
             <h3>Problema das trocas de processos</h3>
-            <p>Mudar de um processo para outro requer um certo tempo para a administração: troca de contexto</p>
-            <p>Um quantum pequeno causa muitas trocas de contexto, então diminui a eficiência da CPU</p>
-            <p> Um quantum longo torna o tempo de resposta inaceitável para tarefas interativas curtas, ruim para processos interativos.</p>
+            <p>Mudar de um processo para outro requer um certo tempo para a administração: troca de contexto.</p>
+            <p>Um quantum pequeno causa muitas trocas de contexto, então diminui a eficiência da CPU.</p>
+            <p>Um quantum longo torna o tempo de resposta inaceitável para tarefas interativas curtas, ruim para processos interativos.</p>
             
             <h3>Escalonamento em sistemas de lote</h3>
             
