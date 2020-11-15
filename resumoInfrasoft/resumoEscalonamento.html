@@ -137,10 +137,11 @@
             <ul>
                 <li>Justiça (fairness): Todos os processos têm chance de usar o processador</li>
                 <li>Eficiência: Taxa de ocupação do processador ao longo do tempo</li>
-                <li>Tempo de Resposta: Tempo entre a ocorrência de um evento e o termino da ação correspondente</li>
-                <li>Turnaround (tempo de retorno): Intervalo entre o tempo de submissão de um processo e o tempo de conclusão (total),
-                    soma dos períodos esperando para entrar na memória, na fila de ready, executando na CPU e realizando operações de I/O</li>
+                <li>Tempo de Resposta: Tempo entre a requisição ao sistema e a exibição da resposta.</li>
+                <li>Turnaround (tempo de retorno): Tempo que um processo leva desde a sua criação até seu término,
+                    soma dos períodos esperando para entrar na memória, na fila de ready, executando na CPU e realizando operações de I/O.</li>
                 <li>Throughput (vazão): No. de “jobs” (processos) executados por unidade de tempo</li>
+                <li>Tempo de espera: Tempo total que um processo passa na fila de pronto durante seu processamento.</li>
             </ul>
             
             <h3>Tipos de escalonamento</h3>
@@ -187,7 +188,7 @@
             <h3>Escalonamento em sistemas interativos</h3>
             <ul>
                 <li>Round-robin</li>
-                <li>Proridade</li>
+                <li>Prioridade</li>
                 <li>Multiple feedback queue</li>
                 <li>Fração justa (ou fair share)</li>
             </ul>

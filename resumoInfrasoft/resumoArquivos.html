@@ -50,7 +50,7 @@
             </ul>
             
             <h2>Operações com arquivos</h2>
-            <p>Create, delete, opendir, closedir, readdir, rename, link, unlink.</p>
+            <p>Create, delete, open, close, read, write, append, seek, get attributes, set attributes, rename</p>
             
             <h2>Sistemas de diretórios hierárquicos</h2>
             <img src="images/diretorios.png" alt="diretorios">
@@ -93,8 +93,10 @@
                 os dados, ele contém o endereço do próximo bloco</p>
             <ul>
                 <li>Em disco: custo de ficar usando a unidade de armazenamento, porque precisa passar 
-                    por cada bloco anterior e requer acesso ao disco, que é uma operação caracteres.</li>
-                <li>Com tabela de alocação: a tabela vai ficar na memória principal, base dos arquivo fat, muito mais eficiente</li>
+                    por cada bloco anterior e requer acesso ao disco, que é uma operação custosa.</li>
+                <li>Com tabela de alocação: a tabela vai ficar na memória principal, base dos arquivo fat
+                    (File Allocation Table: tabela utilizada pelos sistemas operativos da Microsoft
+                    para localizar os ficheiros no disco rígido), muito mais eficiente</li>
             </ul>
             
             <h2>Implementação de arquivos (3)</h2>

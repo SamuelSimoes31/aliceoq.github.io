@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">   
+        <link rel="stylesheet" href="styleResumo2.css">
+        <meta charset="UTF-8">
+        <title>Paginação e segmentação</title>
+    </head>
+    <body>
+        <div id="contentBox">
+            <div id="titleBox">
+                <a href="index.html">⬅ voltar resumão</a>
+                <h1>🤓 RESUMO: Paginação e segmentação 💻</h1>
+                <p class="subtitle">Substituição de páginas</p>
+            </div>
+
+            <h2>😪 RESUMO DO RESUMO 😎</h2>
+            <ul>
+                <li>Na forma mais simples de memória virtual, cada espaço de endereçamento de um processo é dividido em páginas de tamanho uniforme.</li>
+                <li>Dois dos melhores algoritmos de substituição de páginas são o Envelhecimento (aging) e o WSClock.</li>
+                <li>No projeto de sistemas de paginação, a escolha de um algoritmo não é suficiente, precisamos considerar: alocação e tamanho de página.</li>
+                <li>Segmentação ajuda a lidar com estruturas de dados que mudam de tamanho durante a execução, simplifica o compartilhamento e permite proteção diferente para segmentos diferentes.</li>
+                <li>Segmentação e paginação podem ser combinados para fornecer uma memória virtual de duas dimensões.</li>
+            </ul>
+
+            <h2>🥵 Resumo não resumido 🥵</h2>
+            <h2>Substituição de páginas</h2>
+            <p>A paginação foi inventada para fornecer um grande espaço de endereçamento linear sem a necessidade
+                de comprar mais memória física.
+            </p>
+            <ul>
+                <li>Falta de página (page-fault) na memória.</li>
+                <li>A página modificada deve primeiro ser salva (se não foi modificada é apenas sobreposta).</li>
+                <li>Melhor não escolher uma página que está sendo muito usada.</li>
+            </ul>
+
+            <h2>Algoritmos de substituição de páginas</h2>
+            <p>Ótimo: procura substituir o mais tarde possível - impraticável.</p>
+            <ul>Algoritmos existentes:
+                <li>First-In, First-Out (FIFO).</li>
+                <li>Not Recently Used (NRU).</li>
+                <li>Segunda chance (SC).</li>
+                <li>Least Recently Used (LRU).</li>
+                <li>Conjunto de trabalho (Working Set - WS).</li>
+                <li>Relógio (Clock).</li>
+                <li>WSClock.</li>
+            </ul>
+            
+            <h2>Não Usada Recentemente (NUR/NRU)</h2>
+            <ul>
+                <li>Cada página tem os bits Referenciada (R) e Modificada (M).
+                    <ul>
+                        <li>Bits são colocados em 1 quando a página é referenciada e modificada.</li>
+                        <li>Bit R é limpo peridiodicamente.</li>
+                    </ul>
+                </li>
+                <li>As páginas são classificadas: referenciada ou não / modificada ou não.</li>
+                <li>NUR remove página aleatoriamente da classe de ordem mais baixa que não esteja vazia.</li>
+            </ul>
+
+            <h2>Primeira a Entrar, Primeira a Sair (FIFO)</h2>
+            <ul>
+                <li>Mantém uma lista encadeada de todas as páginas.</li>
+                <li>Na ocorrência de falta de página: a mais antiga é removida (a cabeça da lista)</li>
+                <li>Desvantagem: há mais antiga pode ser usada com muita frequência.</li>
+            </ul>
+            
+            <h2>Segunda chance (SC)</h2>
+            <img src="images/segundaChance.png" alt="segundaChance">
+            <p>Operação do algoritmo segunda chance:</p>
+            <ol type="a">
+                <li>lista de páginas em ordem FIFO</li>
+                <li>estado da lista em situação de falta de página no instante 20, com o bit R da página A em 1 (o bit é modificado para 0).</li>
+            </ol>
+
+            <h2>Relógio</h2>
+            <img src="images/relogio.png" alt="">
+            <p>Otimização simples do algoritmo Segunda Chance.</p>
+        
+            <h2>Menos Recentemente Usada (MRU/LRU)</h2>
+            <ul>
+                <li>Considera que páginas usadas recentemente logo serão usadas novamente.
+                    Retira da memória a página que há mais tempo não é usada.</li>
+                <li>Idealmente, usa hardware especial.
+                    <ul>
+                        <li>Contador especial incrementado a cada instrução.</li>
+                        <li>Ou uma matriz NxN, onde N é o número de páginas na memória.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h2>LRU em Software</h2>
+            <ul>
+                <li>NFU (Not Frequently Used): cada página tem um contador (software) incrementado com R quando é usada.</li>
+                <li>Envelhecimento (Aging): a cada interrupção de relógio desloca o contador para a direita e coloca o valor
+                    de R no bit mais significativo.</li>
+            </ul>
+            <img src="lru.png" alt="lru envelhecimento">
+
+            <h2>WSClock</h2>
+            <img src="images/wsclock.png" alt="wsclock">
+            <p>entendi nada do slide</p>
+
+            <h2>Controle de carga</h2>
+            <ul>
+                <li>Sistema ainda pode sofrer paginação excessiva (thrashing)</li>
+                <li>Quando alguns processos precisam de mais memória, mas nenhum outro precisa de menos.</li>
+                <li>Solução: reudizr o número de processos na memória. Levar para disco, reconsiderar grau de multiprogramação.</li>
+            </ul>
+
+            <h2>Tamanho de página</h2>
+            <p>Tamanho de página pequeno:</p>
+            <ul>Vantagens:
+                <li>menos fragmentação interna</li>
+                <li>menos partes não usadas de programas na memória</li>
+            </ul>
+            <ul>Desvantagens:
+                <li>programas precisam de mais páginas, tabelas de página maiores</li>
+                <li>mais acessos a disco</li>
+            </ul>
+
+            <h2>Espaços separados de instruções e dados</h2>
+            <img src="images/espacoInst.png" alt="">
+            <p>Duplica o espaço de endereçamento, permite otimizações na paginação.</p>
+        
+            <h2>Páginas compartilhadas</h2>
+            <p>Dois processos que compartilham  as mesmas instruções e, por consequência, a mesma tabela de páginas para instruções.</p>
+        
+            <h2>Envolvimento do S.O. com paginação</h2>
+            <ol>
+                <li>Criação de processo
+                    <ul>
+                        <li>determina tamanho do programa</li>
+                        <li>cria tabela de página</li>
+                        <li>cria área de troca (swap area)</li>
+                    </ul>
+                </li>
+                <li>Execução de processo
+                    <ul>
+                        <li>inicia MMU para novos processos</li>
+                        <li>limpa a TLB</li>
+                    </ul>
+                </li>
+                <li>Ocorrência de falta de página
+                    <ul>
+                        <li>determina endereço virtual que causou a falta</li>
+                        <li>escolhe e descarta, se necessário, uma página antiga</li>
+                        <li>carrega página requisitada para a memória (swap)</li>
+                    </ul>
+                </li>
+                <li>Terminação de processo
+                    <ul>
+                        <li>Libera tabela de páginas, páginas e espaço em disco que as páginas ocupam.</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h2>Lidando com uma falta de página</h2>
+            <ol>
+                <li>Hardware desvia (trap) a execução para o núcleo, salvando o PC na pilha.</li>
+                <li>S.O. determina página virtual requerida e escalona remoção de uma página da memória</li>
+                <li>Se a página foi modificada, escreve para o disco</li>
+                <li>Quando a moldura está liberada, o SO captura a página requerida no endereço definido no disco</li>
+                <li>Quando a interrupção de disco indica que a página chegou, as tabelas de página são atualizadas</li>
+                <li>PC aponta para a instrução que provocou a falta</li>
+                <li>Demais registradores e outras informações do processo interrompido são carregados</li>
+                <li>Retorna para o espaço de usuário para continuar a execução, como se nenhuma falta tivesse ocorrido</li>
+            </ol>
+
+            <h2>Fixação de páginas na memória</h2>
+            <p>Fixação de páginas envolvidas com E/S na memória para evitar problemas.</p>
+        
+            <h2>Memória secundária</h2>
+            <ul>
+                <li>Podemos manter na área de troca todos os espaços de endereçamento das páginas do processo, inclusive as que 
+                    estão na memória principal (Memória RAM).
+                    <ul>
+                        <li>Vantagem: Mapeamento mais simples.</li>
+                        <li>Desvantagem: Ocupa mais espaço no disco.</li>
+                    </ul>
+                </li>
+                <li>Podemos manter na área de troca apenas os espaços de endereçamento das páginas do processo que não estão na 
+                    memória principal.
+                    <ul>
+                        <li>Vantagem: Menos espaço ocupado em disco.</li>
+                        <li>Desvantagem: Mapeamento mais complexo, pois além da tabela de páginas é necessário um mapa de disco.</li>
+                    </ul>
+                </li>
+                <li>Qual é a melhor estratégia depende do que é mais crítico no momento.</li>
+            </ul>
+
+            <h2>Segmentação</h2>
+            <img src="images/segmentacao.png" alt="">
+            <p>Técnica inventada para permitir que programas e dados sejam quebrados em espaços de endereçamento logicamente independentes e para auxiliar o compartilhamento e a proteção.</p>
+            <ul>
+                <li>Compartilhamento de espaço de endereçamento.</li>
+                <li>Cada processo possui o seu espaço de endereçamento, porém possui um segmento compartilhado.</li>
+                <li>Um segmento é um espaço da memória que mais de um processo pode ter acesso.</li>
+                <li>Não é muito utilizada, pois tem um complicador: o gerenciamento deve ser feito pelo programador, não 
+                    pelo SO, aumentando a complexidade.</li>
+                <li>GDT - Global Descriptor Table: Única para todo o sistema; tabela do SO onde cada entrada informa os dados 
+                    de um segmento, informações sobre todos os segmentos que o SO pode ter.</li>
+                <li>LDT - Local Descriptor Table: Uma para cada processo; informa quantos segmentos um processo pode ter acesso.</li>
+            </ul>
+        </div>
+    </body>
+</html>
