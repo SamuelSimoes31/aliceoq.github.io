@@ -64,7 +64,7 @@
             <ul>
                 <li>Mantém uma lista encadeada de todas as páginas.</li>
                 <li>Na ocorrência de falta de página: a mais antiga é removida (a cabeça da lista)</li>
-                <li>Desvantagem: há mais antiga pode ser usada com muita frequência.</li>
+                <li>Desvantagem: a mais antiga pode ser usada com muita frequência.</li>
             </ul>
             
             <h2>Segunda chance (SC)</h2>
@@ -97,11 +97,13 @@
                 <li>Envelhecimento (Aging): a cada interrupção de relógio desloca o contador para a direita e coloca o valor
                     de R no bit mais significativo.</li>
             </ul>
-            <img src="lru.png" alt="lru envelhecimento">
+            <img src="images/lru.png" alt="lru envelhecimento">
 
             <h2>WSClock</h2>
             <img src="images/wsclock.png" alt="wsclock">
-            <p>entendi nada do slide</p>
+            <p>Acessa a tabela de páginas de forma circular e já remove a primeira página que satisfaz a condição de remoção.</p>
+            <p>Se não houver nenhuma página ideal, pega a página que foi acessada há mais tempo.</p>
+            <p>Ótimo: Impraticável; escolhe exatamente a melhor página a ser removida, sempre seleciona a página que não será usada por mais tempo.</p>
 
             <h2>Controle de carga</h2>
             <ul>
